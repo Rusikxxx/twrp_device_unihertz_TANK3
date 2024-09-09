@@ -145,3 +145,11 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_TANK3
 TARGET_RECOVERY_DEVICE_MODULES := libinit_TANK3
+
+# HIDL - Add \system\lib64 binaries - Attempt trustkernel decrypt
+PRODUCT_PACKAGES += \
+    android.hidl.allocator@1.0 \
+    android.hidl.memory.token@1.0 \
+    android.hidl.memory@1.0 \
+    android.hidl.token@1.0 \
+    libhidlmemory
