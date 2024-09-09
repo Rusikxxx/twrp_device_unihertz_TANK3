@@ -1,0 +1,8 @@
+ on boot
+ #Added Manual For Trustkernel
+    mkdir /mnt/vendor/persist
+    mount ext4 /dev/block/by-name/persist /mnt/vendor/persist rw
+    mkdir /mnt/vendor/protect_f
+    mount ext4 /dev/block/by-name/protect1 /mnt/vendor/protect_f rw
+    mkdir /mnt/vendor/protect_s
+    mount ext4 /dev/block/by-name/protect2 /mnt/vendor/protect_s rw
