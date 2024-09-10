@@ -58,6 +58,32 @@ on boot
 on property:init.svc.adbd=stopped
     setprop sys.usb.ffs.ready 0
 
+# midi for kpoc
+on property:ro.bootmode=charger && property:ro.debuggable=0
+    setprop sys.usb.config kpoc_midi
+
+on property:ro.bootmode=charger && property:ro.debuggable=1 && property:ro.vendor.usb.kpoc_adb=0
+    setprop sys.usb.config kpoc_midi
+
+on property:sys.usb.config=kpoc_midi && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "kpoc_midi"
+    write /config/usb_gadget/g1/idProduct 0x2046
+    symlink /config/usb_gadget/g1/functions/midi.gs5 /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/UDC ${vendor.usb.controller}
+
+# adb for kpoc
+on property:ro.bootmode=charger && property:ro.debuggable=1 && property:ro.vendor.usb.kpoc_adb=1
+    setprop sys.usb.config kpoc_adb
+
+on property:sys.usb.config=kpoc_adb && property:sys.usb.configfs=1
+    start kpoc_adbd
+
+on property:sys.usb.ffs.ready=1 && property:sys.usb.config=kpoc_adb && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "kpoc_adb"
+    write /config/usb_gadget/g1/idProduct 0x201C
+    symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1
+    write /config/usb_gadget/g1/UDC ${vendor.usb.controller}
+
 on property:sys.usb.config=none && property:sys.usb.configfs=1
     write /config/usb_gadget/g1/idVendor ${sys.usb.vid}
     rm /config/usb_gadget/g1/configs/b.1/f1
