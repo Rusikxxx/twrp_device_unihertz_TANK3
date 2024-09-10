@@ -31,6 +31,7 @@ ro.agui.device_name=TANK 3
 ro.agui.platform_name=mt6895
 ro.agui.version_release=12
 ro.vendor.build.security_patch=2024-03-05
+ro.boot.serialno=TANK300000007434
 #
 ro.agui.global_action_overlay=yes
 ro.LED_COLOR_TEST_NEW=k510
