@@ -1,4 +1,4 @@
-### TWRP device tree for Unihertz Tank 3 -- 8849 TANK3 - kernel 5.10.xxx
+### TWRP device tree for Unihertz Tank 3 -- 8849 TANK3 - kernel 5.10.198
 
 This branch has ***encrypt/decrypt*** files and option to more test with that. 
 
