@@ -132,24 +132,33 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libkeymaster41 \
     libpuresoftkeymasterdevice \
     libion \
-    libxml2
+    libxml2 \
+    android.hidl.allocator@1.0 \
+    android.hidl.memory.token@1.0 \
+    android.hidl.memory@1.0 \
+    android.hidl.token@1.0 \
+    libhidlmemory
 
 RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster41.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so
-
+    $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.allocator@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.memory.token@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.memory@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.token@1.0.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libhidlmemory.so
 
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_TANK3
 TARGET_RECOVERY_DEVICE_MODULES := libinit_TANK3
 
 # HIDL - Add \system\lib64 binaries - Attempt trustkernel decrypt
-PRODUCT_PACKAGES += \
-    android.hidl.allocator@1.0 \
-    android.hidl.memory.token@1.0 \
-    android.hidl.memory@1.0 \
-    android.hidl.token@1.0 \
-    libhidlmemory
+#PRODUCT_PACKAGES += \
+#    android.hidl.allocator@1.0 \
+#    android.hidl.memory.token@1.0 \
+#    android.hidl.memory@1.0 \
+#    android.hidl.token@1.0 \
+#    libhidlmemory
