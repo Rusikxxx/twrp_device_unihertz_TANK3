@@ -167,7 +167,7 @@ TARGET_USES_MKE2FS := true
 TW_MAX_BRIGHTNESS := 255
 TW_DEFAULT_BRIGHTNESS := 130
 TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone29/temp
-TW_DEVICE_VERSION := 8849 TANK 3_20240422 - lopestom
+TW_DEVICE_VERSION := NoCrypt-8849 TANK 3_20240422 - lopestom
 
 # Vendor Modules
 TW_LOAD_VENDOR_MODULES := true
