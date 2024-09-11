@@ -68,10 +68,10 @@ service teed /vendor/bin/teed \
     capabilities SYS_RAWIO
     user root
     group root
+    capabilities SYS_RAWIO
     disabled
     seclabel u:r:recovery:s0
 
-#	capabilities SYS_RAWIO
 #	user system
 #	group system
 #	class core
@@ -82,6 +82,7 @@ service tee_check_keybox /vendor/bin/tee_check_keybox
     disabled
     oneshot
     seclabel u:r:recovery:s0
+
 #       user system
 #       group system
 #       class main
