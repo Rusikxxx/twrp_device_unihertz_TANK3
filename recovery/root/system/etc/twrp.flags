@@ -14,11 +14,13 @@
 /dtbo			emmc		/dev/block/by-name/dtbo											flags=display=dtbo;slotselect;backup
 /metadata		ext4		/dev/block/by-name/metadata										flags=display=metadata;backup
 /misc			emmc		/dev/block/by-name/misc											flags=display=misc;backup
+/data               f2fs      /dev/block/by-name/userdata                            flags=fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption
 
 # Sensitive Data
 /nvcfg			ext4		/dev/block/by-name/nvcfg										flags=display=nvcfg;backup
-/persist_image		emmc		/dev/block/by-name/persist										flags=display=persist;backup
-/persistent		emmc		/dev/block/by-name/frp											flags=display=persistent;backup
+/persist            ext4      /dev/block/by-name/persist                             flags=display="persist";backup=1
+/persist_image      emmc      /dev/block/by-name/persist                             flags=display="persist";backup=1;flashimg=1
+/persistent		emmc		/dev/block/by-name/frp											flags=display=FRP;backup;flashimg=1
 
 # IMEI and modem related
 /nvdata			ext4		/dev/block/by-name/nvdata										flags=display=nvdata;backup
