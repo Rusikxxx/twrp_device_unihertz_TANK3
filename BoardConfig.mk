@@ -164,13 +164,15 @@ TARGET_USES_LOGD := true
 TARGET_USES_MKE2FS := true
 TW_MAX_BRIGHTNESS := 255
 TW_DEFAULT_BRIGHTNESS := 130
-TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone29/temp
+TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone54/temp
 TW_DEVICE_VERSION := 8849 TANK 3_20240422 - lopestom
 
 # Vendor Modules
 TW_LOAD_VENDOR_MODULES := true
 TW_LOAD_VENDOR_BOOT_MODULES := true
 TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
+
+TW_NO_HAPTICS := true
 
 # Resolution
 TW_THEME := portrait_hdpi
