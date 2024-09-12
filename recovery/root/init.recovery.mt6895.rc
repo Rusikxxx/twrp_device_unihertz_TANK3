@@ -72,16 +72,16 @@ service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
     seclabel u:r:recovery:s0
 
 service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
-    interface android.hardware.gatekeeper@1.0::IGatekeeper default
+#    interface android.hardware.gatekeeper@1.0::IGatekeeper default
     user root
     group root
     disabled
     seclabel u:r:recovery:s0
 
 service vendor.keymint-trustkernel /vendor/bin/hw/android.hardware.security.keymint-service.trustkernel
-    class early_hal
-    interface android.hardware.keymaster@4.0::IKeymasterDevice default
-    interface android.hardware.keymaster@4.1::IKeymasterDevice default
+#    class early_hal
+#    interface android.hardware.keymaster@4.0::IKeymasterDevice default
+#    interface android.hardware.keymaster@4.1::IKeymasterDevice default
     user root
     group root
     disabled
@@ -90,19 +90,20 @@ service vendor.keymint-trustkernel /vendor/bin/hw/android.hardware.security.keym
 service keymaster_attestation-1-1 /vendor/bin/hw/vendor.mediatek.hardware.keymaster_attestation@1.1-service
     interface vendor.mediatek.hardware.keymaster_attestation@1.0::IKeymasterDevice default
     interface vendor.mediatek.hardware.keymaster_attestation@1.1::IKeymasterDevice default
-    class hal
     user root
     group root
     disabled
     seclabel u:r:recovery:s0
 
-#service agolddaemon /vendor/bin/hw/vendor.mediatek.hardware.agolddaemon@1.0-service
-#    class hal
-#    user system
-#    group system
+service agolddaemon /vendor/bin/hw/vendor.mediatek.hardware.agolddaemon@1.0-service
+    class hal
+    user system
+    group system
 
 
 on property:crypto.ready=1
+    start teed
+    start vendor.gatekeeper-1-0
     start vendor.keymint-trustkernel
 
 on property:hwservicemanager.ready=true
@@ -110,8 +111,6 @@ on property:hwservicemanager.ready=true
     start vendor.gatekeeper-1-0
 # agold trustkernel tee patch start
     start vendor.keymint-trustkernel
-    start vendor.keymaster-4-0-trustkernel
-    start vendor.keymaster-4-1-trustkernel
 # trustkernel tee patch end
     start keymaster_attestation-1-1
 
@@ -144,6 +143,7 @@ on post-fs-data
     mkdir /data/vendor_de/0 0770 system system
     mkdir /data/vendor_de/0/cryptoeng 0770 system system
 
+on boot
     start health-hal-2-1
     setprop sys.usb.config adb
 
