@@ -23,6 +23,7 @@ on post-fs-data
     # Key Installation
     mkdir /data/vendor/key_provisioning 0771 system system
 #SeLinux
+    restorecon_recursive /mnt/vendor/persist
     restorecon_recursive /mnt/vendor/protect_f
     restorecon_recursive /mnt/vendor/protect_s
 
