@@ -9,6 +9,8 @@ on init
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
     setprop crypto.ready 1
 
+    symlink /vendor/lib64/hw/libSoftGatekeeper.so   /vendor/lib64/hw/gatekeeper.default.so
+
 on fs && property:ro.debuggable=0
     start adbd
 
@@ -26,6 +28,7 @@ on late-fs
     mount_all /first_stage_ramdisk/fstab.mt6895 --late
 
 on post-fs
+    start logd
     start boot-hal-1-2
 
     symlink /dev/block/mapper/pl_a /dev/block/by-name/preloader_raw_a
