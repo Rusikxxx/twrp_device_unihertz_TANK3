@@ -109,6 +109,11 @@ on property:crypto.ready=1
     start vendor.gatekeeper-1-0
     start vendor.keymint-trustkernel
 
+on property:vendor.sys.listeners.registered=true
+    start vendor.gatekeeper-1-0
+    start vendor.keymint-trustkernel
+    start keymaster_attestation-1-1
+
 on property:hwservicemanager.ready=true
     start teed
     start vendor.gatekeeper-1-0
