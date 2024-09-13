@@ -99,10 +99,10 @@ jobs:
       with:
        files: | 
          twrp/out/target/product/TANK3/*boot*.img
-       name: Unofficial TWRP for Unihertz Tank 3 - ${{ env.BUILD_DATE }}
+       name: Unofficial TWRP for Unihertz Tank 3 8849 - ${{ env.BUILD_DATE }}
        tag_name: ${{ github.run_id }}
        body: |
          MANIFEST: twrp-12.1
          Device: TANK3
          Build: vendor_bootimage
-         DT Branch: twrp-12.1
+         DT Branch: ADT
