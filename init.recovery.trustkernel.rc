@@ -1,0 +1,79 @@
+on init
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+
+on fs
+    mkdir /mnt/vendor 0755 system system
+    mkdir /mnt/vendor/protect_f 0770 system system
+    mkdir /mnt/vendor/protect_s 0770 system system
+    mkdir /mnt/vendor/persist 0755 system system
+    mkdir /mnt/vendor/nvdata 0771 system system
+    mkdir /mnt/vendor/nvcfg 0771 system system
+    mount ext4 /dev/block/by-name/protect1 /mnt/vendor/protect_f rw wait
+    mount ext4 /dev/block/by-name/protect2 /mnt/vendor/protect_s rw wait
+    mount ext4 /dev/block/by-name/persist /mnt/vendor/persist rw wait
+    mount ext4 /dev/block/by-name/nvdata /mnt/vendor/nvdata rw wait
+    mount ext4 /dev/block/by-name/nvcfg /mnt/vendor/nvcfg rw wait
+    mkdir /mnt/vendor/persist/t6_twrp 0755 system system
+    mkdir /mnt/vendor/protect_f/tee_twrp 0755 system system
+    exec u:r:recovery:s0 system -- /vendor/bin/trustkernel.twrp.sh
+    install_keyring
+    setprop crypto.ready 1
+    wait /dev/block/platform/soc/112b0000.ufshci
+    symlink /dev/block/platform/soc/112b0000.ufshci /dev/block/bootdevice
+
+#    symlink /dev/block/platform/bootdevice /dev/block/bootdevice
+
+# We need vold early for metadata encryption
+on early-fs
+    start vold
+
+on late-fs
+    # Mount RW partitions which need run fsck
+    mount_all /first_stage_ramdisk/fstab.mt6895 --late
+
+on post-fs
+    start boot-hal-1-2
+
+service keystore_auth /system/bin/keystore_auth
+    oneshot
+    user system
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service keystore /system/bin/keystore /tmp/misc/keystore
+    user root
+    group root drmrpc readproc
+    disabled
+    seclabel u:r:recovery:s0
+
+on property:crypto.ready=1
+    start vendor.keymint-trustkernel
+
+on property:hwservicemanager.ready=true
+    start vendor.keymint-trustkernel
+    start vendor.gatekeeper-1-0
+
+on property:ro.crypto.state=unsupported
+    stop teed
+    stop vendor.keymint-trustkernel
+    stop vendor.gatekeeper-1-0
+
+on property:ro.crypto.state=unencrypted
+    stop teed
+    stop vendor.keymint-trustkernel
+    stop vendor.gatekeeper-1-0
+
+on property:twrp.decrypt.done=true
+    stop teed
+    stop vendor.keymint-trustkernel
+    stop vendor.gatekeeper-1-0
+
+on property:crypto.ready=0
+    stop teed
+    stop vendor.gatekeeper-1-0
+    stop vendor.keymint-trustkernel
+
+on boot
+    start health-hal-2-1
+    setprop sys.usb.config adb
