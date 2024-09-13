@@ -235,6 +235,7 @@
 /dev/mtk_ccd		0660	system camera
 
 # agold trustkernel tee patch start
+/dev/tkcoredrv            0666   root       system
 #TrustKernel
 /dev/tkcore_admin         0600   system     system
 /dev/tkcore_client        0660   root       system

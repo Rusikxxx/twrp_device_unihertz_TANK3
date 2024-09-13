@@ -1,6 +1,8 @@
 ####### generate by lopestom #######
 # Fstab
 ro.postinstall.fstab.prefix=/system
+# USB MTP WHQL
+ro.sys.usb.mtp.whql.enable=0
 # USB MTP
 ro.sys.usb.storage.type=mtp
 # MTK
@@ -17,11 +19,13 @@ ro.crypto.uses_fs_ioc_add_encryption_key=true
 ro.crypto.volume.metadata.method=dm-default-key
 ro.crypto.dm_default_key.options_format.version=2
 ro.crypto.volume.options=::v2
+ro.crypto.allow_encrypt_override=true
+ro.crypto.metadata_init_delete_all_keys.enabled=false
 # TEE & Gatekeeper & Keymaster
 ro.vendor.mtk_trustkernel_tee_support=1
 ro.hardware.kmsetkey=trustkernel
 ro.hardware.gatekeeper=trustkernel
-keymaster_ver=4.1
+ro.vendor.trustkernel.keystore=persist
 # from device
 # TANK3 start
 ro.vendor.build.real_version=TANK3_20240805_2112
@@ -29,20 +33,17 @@ ro.agui.real_version=TANK3_20240805_2112
 ro.vendor.build.custom_version=TANK3_20240805_2117
 ro.agui.device_name=TANK 3
 ro.agui.platform_name=mt6895
-ro.agui.version_release=12
-ro.vendor.build.security_patch=2024-03-05
+#ro.agui.version_release=12
+#ro.vendor.build.security_patch=2024-03-05
+persist.sys.fuse.passthrough.enable=true
+ro.product.model_for_attestation=
+ro.product.brand_for_attestation=
+ro.product.name_for_attestation=
 #
-ro.agui.global_action_overlay=yes
-ro.LED_COLOR_TEST_NEW=k510
 ro.sdcard_support=yes
 ro.is.agui.project=yes
 ro.agui.fast_charge_support=yes
 ro.LED_COLOR_TEST=yes
 ro.agui.show_sn=yes
 ro.agui_tee=TRUSTKERNEL
-#
-ro.hardware.vulkan=mali
-#
-ro.vendor.mtk_mvpu_security_support=0
-ro.vendor.mtk_fast_charging_support=1
 ####### generate by lopestom #######
