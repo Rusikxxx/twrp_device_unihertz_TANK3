@@ -86,7 +86,7 @@ jobs:
        PATH=~/bin:$PATH
        cd twrp
        export ALLOW_MISSING_DEPENDENCIES=true && source build/envsetup.sh &&lunch twrp_TANK3-eng && mka $TARGET -j$(nproc --all)
-       cp  out/target/product/TANK3/vendor_boot.img    out/target/product/TANK3/vendor_boot-TANK3-NoCrypt-$(date +"%Y%m%d").img  
+       cp  out/target/product/TANK3/vendor_boot.img    out/target/product/TANK3/vendor_boot-TANK3-$(date +"%Y%m%d").img  
 
     - name: Set Build Date # Output will be use in Release
       run: |
@@ -105,4 +105,4 @@ jobs:
          MANIFEST: twrp-12.1
          Device: TANK3
          Build: vendor_bootimage
-         DT Branch: twrp-12.1
+         DT Branch: duchamp
