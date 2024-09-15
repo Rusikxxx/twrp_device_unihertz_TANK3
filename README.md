@@ -51,13 +51,8 @@ Some tests was made:
 <details><summary>TWRP Pictures - Click to open</summary>
 <p>
 
-![Screenshot_2024-09-11-20-53-14_resized](https://github.com/user-attachments/assets/a52fb9cf-bf7b-4a00-8ece-4798ff9f8c47)
-![Screenshot_2024-09-11-12-48-00_resized](https://github.com/user-attachments/assets/34802730-3bae-427b-b92a-e49d6f3b7704)
-![Screenshot_2024-09-11-12-49-34_resized](https://github.com/user-attachments/assets/1cdbdd35-27f9-4820-8c73-a74b2061bd73)
-![Screenshot_2024-09-11-20-52-39_resized](https://github.com/user-attachments/assets/45d63b86-cfc7-4542-8155-7eb540928e68)
-![Screenshot_2024-09-11-20-51-26_resized](https://github.com/user-attachments/assets/a9b3796b-4d17-46ce-8fc4-342e925f6314)
-![Screenshot_2024-09-11-20-51-54_resized](https://github.com/user-attachments/assets/ed7b22fb-2568-48a9-9cd8-c30b2b7fbb86)
-![Screenshot_2024-09-11-20-51-33_resized](https://github.com/user-attachments/assets/231b4a42-f0a1-4634-b75c-75850dceb3c7)
+
+
 </p>
 </details>
 

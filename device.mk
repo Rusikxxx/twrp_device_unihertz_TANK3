@@ -8,7 +8,10 @@
 LOCAL_PATH := device/8849/TANK3
 
 # Inherit from those products. Most specific first.
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
+#$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
+
+# Configure core_64_bit.mk
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
 # Installs gsi keys into ramdisk, to boot a developer GSI with verified boot.
@@ -24,18 +27,30 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/userspace_reboot.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_vendor_ramdisk.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression.mk)
 
-ENABLE_VIRTUAL_AB := true
-AB_OTA_UPDATER := true
+# Dynamic Partitions
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
+# API
+PRODUCT_SHIPPING_API_LEVEL := 31
+
+# VNDK
+PRODUCT_TARGET_VNDK_VERSION := 34
+
+# Virtual A/B
+ENABLE_VIRTUAL_AB := true
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
+
+AB_OTA_UPDATER := true
 AB_OTA_PARTITIONS += \
     boot \
     dtbo \
-    lk \
+    lk1 \
     odm \
     odm_dlkm \
     product \
     system \
     system_ext \
+    vbmeta \
     vbmeta_system \
     vbmeta_vendor \
     vendor \
@@ -58,21 +73,12 @@ PRODUCT_PACKAGES += \
     otapreopt_script \
     cppreopts.sh
 
-# HideReflashTWRP
-PRODUCT_PROPERTY_OVERRIDES += ro.twrp.vendor_boot=true
-
-# Dynamic Partitions
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
-
-# API
-PRODUCT_SHIPPING_API_LEVEL := 31
-PRODUCT_TARGET_VNDK_VERSION := 31
-
 # Boot control HAL
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-mtkimpl \
-    android.hardware.boot@1.2-mtkimpl.recovery
-
+    android.hardware.boot@1.2-mtkimpl.recovery \
+    android.hardware.boot@1.2-service
+    
 PRODUCT_PACKAGES_DEBUG += \
     bootctrl \
     update_engine_client
@@ -84,20 +90,13 @@ PRODUCT_PACKAGES += \
 # Fastbootd
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
+    android.hardware.fastboot@1.0-impl-mock.recovery \
     fastbootd
 
 # Health Hal
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
     android.hardware.health@2.1-service
-
-# Keymaster
-PRODUCT_PACKAGES += \
-    android.hardware.keymaster@4.1
-
-# Keystore Hal
-PRODUCT_PACKAGES += \
-    android.system.keystore2
 
 # MTK plpath utils
 PRODUCT_PACKAGES += \
@@ -116,49 +115,43 @@ PRODUCT_PACKAGES += \
     update_engine_sideload \
     update_verifier
 
+# Drm
+PRODUCT_PACKAGES += \
+    android.hardware.drm@1.4
+
 PRODUCT_PACKAGES_DEBUG += \
     update_engine_client
 
-# Additional configs
-TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.keymaster@4.1
-
+# Additional target Libraries
 TARGET_RECOVERY_DEVICE_MODULES += \
-    android.hardware.keymaster@4.1
-
-    # Additional Libraries
-TARGET_RECOVERY_DEVICE_MODULES += \
-    libkeymaster4 \
-    libkeymaster41 \
-    libpuresoftkeymasterdevice \
     libion \
     libxml2 \
+    libpuresoftkeymasterdevice \
     android.hidl.allocator@1.0 \
     android.hidl.memory.token@1.0 \
     android.hidl.memory@1.0 \
     android.hidl.token@1.0 \
-    libhidlmemory
+    libhidlmemory \
+    libgatekeeper \
+    libgatekeeper_aidl \
+    libhardware_legacy
 
 RECOVERY_LIBRARY_SOURCE_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster41.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.allocator@1.0.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.memory.token@1.0.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.memory@1.0.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.token@1.0.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libhidlmemory.so
+    $(TARGET_OUT_SHARED_LIBRARIES)/libhidlmemory.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libgatekeeper.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libgatekeeper_aidl.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libhardware_legacy.so
 
 # Init
-TARGET_INIT_VENDOR_LIB := libinit_TANK3
-TARGET_RECOVERY_DEVICE_MODULES := libinit_TANK3
+#TARGET_INIT_VENDOR_LIB := libinit_TANK3
+#TARGET_RECOVERY_DEVICE_MODULES := libinit_TANK3
 
-# HIDL - Add \system\lib64 binaries - Attempt trustkernel decrypt
-#PRODUCT_PACKAGES += \
-#    android.hidl.allocator@1.0 \
-#    android.hidl.memory.token@1.0 \
-#    android.hidl.memory@1.0 \
-#    android.hidl.token@1.0 \
-#    libhidlmemory
+# HideReflashTWRP
+PRODUCT_PROPERTY_OVERRIDES += ro.twrp.vendor_boot=true
