@@ -1,6 +1,4 @@
-import /init.trustkernel.rc
-#import /init.tee.rc
-#import /init.custom.rc
+import /init.recovery.trustkernel.rc
 
 on init
     setprop sys.usb.configfs 1
@@ -9,15 +7,8 @@ on init
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
     setprop crypto.ready 1
 
-    symlink /vendor/lib64/hw/libSoftGatekeeper.so   /vendor/lib64/hw/gatekeeper.default.so
-
-on fs && property:ro.debuggable=0
-    start adbd
-
 on fs
     install_keyring
-    wait /dev/block/platform/soc/112b0000.ufshci
-    symlink /dev/block/platform/soc/112b0000.ufshci /dev/block/bootdevice
 
 # We need vold early for metadata encryption
 on early-fs
@@ -28,130 +19,114 @@ on late-fs
     mount_all /first_stage_ramdisk/fstab.mt6895 --late
 
 on post-fs
-    start logd
     start boot-hal-1-2
 
-    symlink /dev/block/mapper/pl_a /dev/block/by-name/preloader_raw_a
-    symlink /dev/block/mapper/pl_b /dev/block/by-name/preloader_raw_b
+    # Support A/B feature for EMMC and UFS boot region
+    wait /dev/block/mmcblk0boot0 2
+    symlink /dev/block/sda /dev/block/mmcblk0boot0
+    symlink /dev/block/sdb /dev/block/mmcblk0boot1
+    symlink /dev/block/mmcblk0boot0 /dev/block/platform/bootdevice/by-name/preloader_a
+    symlink /dev/block/mmcblk0boot1 /dev/block/platform/bootdevice/by-name/preloader_b
 
-on boot
+    # Support A/B feature for combo emmc and ufs OTA update
+    symlink /dev/block/platform/bootdevice/by-name/preloader_a /dev/block/platform/bootdevice/by-name/preloader_emmc_a
+    symlink /dev/block/platform/bootdevice/by-name/preloader_b /dev/block/platform/bootdevice/by-name/preloader_emmc_b
+    symlink /dev/block/platform/bootdevice/by-name/preloader_a /dev/block/platform/bootdevice/by-name/preloader_ufs_a
+    symlink /dev/block/platform/bootdevice/by-name/preloader_b /dev/block/platform/bootdevice/by-name/preloader_ufs_b
+
+    # Support A/B feature for combo emmc and ufs OTA update
+    symlink /dev/block/platform/bootdevice/by-name/preloader_a /dev/block/by-name/preloader_emmc_a
+    symlink /dev/block/platform/bootdevice/by-name/preloader_b /dev/block/by-name/preloader_emmc_b
+    symlink /dev/block/platform/bootdevice/by-name/preloader_a /dev/block/by-name/preloader_ufs_a
+    symlink /dev/block/platform/bootdevice/by-name/preloader_b /dev/block/by-name/preloader_ufs_b
+
+    symlink /dev/block/platform/bootdevice /dev/block/bootdevice
+
+    exec u:r:update_engine:s0 root root -- /system/bin/mtk_plpath_utils
     start mtk.plpath.utils.link
 
-on property:persist.vendor.mtk.pl_lnk=1
-    symlink /dev/block/mapper/pl_a /dev/block/by-name/preloader_raw_a
-    symlink /dev/block/mapper/pl_b /dev/block/by-name/preloader_raw_b
-    symlink /dev/block/mapper/pl_a /dev/block/platform/bootdevice/by-name/preloader_raw_a
-    symlink /dev/block/mapper/pl_b /dev/block/platform/bootdevice/by-name/preloader_raw_b
-
-# FSTAB_RAW2(lk2,bootloader2) of fstab.in.emmc, but without bootloader2 mount point
-    symlink /dev/block/by-name/lk1 /dev/block/by-name/bootloader1
-    symlink /dev/block/by-name/lk2 /dev/block/by-name/bootloader2
-
-# Fix ro.vendor.mtk_ufs_support remove issue of recovery mode
-on property:vendor.mtk.boot0_linka=1
-    symlink /dev/block/sda /dev/block/mmcblk0boot0
-
-on property:vendor.mtk.boot0_linkb=1
-    symlink /dev/block/sdb /dev/block/mmcblk0boot0
-
-on property:vendor.mtk.boot0_linkc=1
-    symlink /dev/block/sdc /dev/block/mmcblk0boot0
-
-on property:vendor.mtk.boot1_linka=1
-    symlink /dev/block/sda /dev/block/mmcblk0boot1
-
-on property:vendor.mtk.boot1_linkb=1
-    symlink /dev/block/sdb /dev/block/mmcblk0boot1
-
-on property:vendor.mtk.boot1_linkc=1
-    symlink /dev/block/sdc /dev/block/mmcblk0boot1
+on post-fs-data
 
 service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
     class main
     user root
     group root system
-    oneshot
     disabled
+    oneshot
     seclabel u:r:recovery:s0
 
 service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
-#    interface android.hardware.gatekeeper@1.0::IGatekeeper default
+    interface android.hardware.gatekeeper@1.0::IGatekeeper default
+    class hal
     user root
     group root
     disabled
     seclabel u:r:recovery:s0
+
+on property:hwservicemanager.ready=true && property:vendor.sys.listeners.registered=true
+    start vendor.keymint-trustkernel
 
 service vendor.keymint-trustkernel /vendor/bin/hw/android.hardware.security.keymint-service.trustkernel
-#    class early_hal
-#    interface android.hardware.keymaster@4.0::IKeymasterDevice default
-    interface android.hardware.keymaster@4.1::IKeymasterDevice default
+    user root
+    group root
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    disabled
+    seclabel u:r:recovery:s0
+
+on property:ro.crypto.state=encrypted && property:hwservicemanager.ready=true
+    start teed
+
+service teed /vendor/bin/teed
+    user root
+    group root
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    disabled
+    seclabel u:r:recovery:s0
+
+service set_permissive /system/bin/set_permissive.sh
     user root
     group root
     disabled
+    oneshot 
     seclabel u:r:recovery:s0
     
-service keymaster_attestation-1-1 /vendor/bin/hw/vendor.mediatek.hardware.keymaster_attestation@1.1-service
-#    interface vendor.mediatek.hardware.keymaster_attestation@1.0::IKeymasterDevice default
-    interface vendor.mediatek.hardware.keymaster_attestation@1.1::IKeymasterDevice default
-#    user root
-#    group root
+ service overrideprops /system/bin/overrideprops.sh
+    user root
+    group root
     disabled
+    oneshot
     seclabel u:r:recovery:s0
 
-service agolddaemon /vendor/bin/hw/vendor.mediatek.hardware.agolddaemon@1.0-service
-    class hal
-    user system
-    group system
-
-
 on property:crypto.ready=1
+    start vendor.keymint-trustkernel
     start teed
-    start vendor.gatekeeper-1-0
-    start vendor.keymint-trustkernel
-
-on property:vendor.sys.listeners.registered=true
-    start vendor.gatekeeper-1-0
-    start vendor.keymint-trustkernel
-    start keymaster_attestation-1-1
 
 on property:hwservicemanager.ready=true
-    start teed
-    start vendor.gatekeeper-1-0
-# agold trustkernel tee patch start
     start vendor.keymint-trustkernel
-# trustkernel tee patch end
-    start keymaster_attestation-1-1
+    start vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=unsupported
     stop teed
-    stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
-    stop keymaster_attestation-1-1
+    stop vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=unencrypted
     stop teed
-    stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
-    stop keymaster_attestation-1-1
+    stop vendor.gatekeeper-1-0
 
 on property:twrp.decrypt.done=true
     stop teed
-    stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
-    stop keymaster_attestation-1-1
+    stop vendor.gatekeeper-1-0
 
 on property:crypto.ready=0
     stop teed
-    stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
-    stop keymaster_attestation-1-1
-
-on post-fs-data
-    mkdir /data/vendor_de 0770 system system
-    mkdir /data/vendor_de/0 0770 system system
-    mkdir /data/vendor_de/0/cryptoeng 0770 system system
+    stop vendor.gatekeeper-1-0
 
 on boot
     start health-hal-2-1
+    start set_permissive
+    start overrideprops
     setprop sys.usb.config adb
-
