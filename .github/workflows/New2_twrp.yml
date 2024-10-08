@@ -105,4 +105,4 @@ jobs:
          MANIFEST: twrp-12.1
          Device: TANK3
          Build: vendor_bootimage
-         DT Branch: twrp-12.2
+         DT Branch: twrp-12.3 - plato
