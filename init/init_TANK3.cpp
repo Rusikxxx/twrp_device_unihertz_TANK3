@@ -28,6 +28,7 @@ void vendor_load_properties()
         property_override(string("ro.product.") + prop + string("name"), "TANK3");
         property_override(string("ro.product.") + prop + string("device"), "TANK3");
         property_override(string("ro.product.") + prop + string("model"), "TANK 3");
-        property_override(string("ro.product.") + prop + string("manufacturer"), "OBLUE");
     }
+    property_override("ro.bootimage.build.date.utc", "1706772601");
+    property_override("ro.build.date.utc", "1706772601");
 }
