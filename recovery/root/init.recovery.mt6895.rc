@@ -69,7 +69,7 @@ on property:hwservicemanager.ready=true && property:vendor.sys.listeners.registe
 service vendor.keymint-trustkernel /vendor/bin/hw/android.hardware.security.keymint-service.trustkernel
     user root
     group root
-    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
     disabled
     seclabel u:r:recovery:s0
 
@@ -79,17 +79,10 @@ on property:ro.crypto.state=encrypted && property:hwservicemanager.ready=true
 service teed /vendor/bin/teed
     user root
     group root
-    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
     disabled
     seclabel u:r:recovery:s0
 
-service set_permissive /system/bin/set_permissive.sh
-    user root
-    group root
-    disabled
-    oneshot 
-    seclabel u:r:recovery:s0
-    
  service overrideprops /system/bin/overrideprops.sh
     user root
     group root
@@ -127,6 +120,5 @@ on property:crypto.ready=0
 
 on boot
     start health-hal-2-1
-    start set_permissive
     start overrideprops
     setprop sys.usb.config adb
