@@ -60,6 +60,7 @@ service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-ser
     class hal
     user root
     group root
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
     disabled
     seclabel u:r:recovery:s0
 
@@ -81,13 +82,6 @@ service teed /vendor/bin/teed
     group root
     setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
     disabled
-    seclabel u:r:recovery:s0
-
- service overrideprops /system/bin/overrideprops.sh
-    user root
-    group root
-    disabled
-    oneshot
     seclabel u:r:recovery:s0
 
 on property:crypto.ready=1
@@ -120,5 +114,4 @@ on property:crypto.ready=0
 
 on boot
     start health-hal-2-1
-    start overrideprops
     setprop sys.usb.config adb
