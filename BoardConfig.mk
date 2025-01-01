@@ -34,7 +34,7 @@ TARGET_USES_UEFI := true
 
 # Prebuilt
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
-TARGET_RECOVERY_DEVICE_DIRS += $(BASE_DEVICE_PATH)
+TARGET_RECOVERY_DEVICE_DIRS += $(DEVICE_PATH)
 TARGET_RECOVERY_DEVICE_DIRS += $(DEVICE_PATH)
 
 # Partitions
@@ -69,10 +69,10 @@ TARGET_COPY_OUT_PRODUCT := product
 # Recovery
 TARGET_NO_RECOVERY := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-TARGET_RECOVERY_FSTAB := $(BASE_DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 
 # Properties
-TARGET_SYSTEM_PROP += $(BASE_DEVICE_PATH)/system.prop
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
 
 # Image settings
 TARGET_NO_KERNEL := true
