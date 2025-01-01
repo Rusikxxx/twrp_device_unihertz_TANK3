@@ -1,0 +1,36 @@
+This SW Support Peripherals Lists As Follow :;
+Gsensor Lists :;
+QMI8658;
+
+Msensor Lists :;
+QMC6308;
+
+Gyrsensor Lists :;
+GMP102;
+
+ALS/PS Lists :;
+STK3A5X;
+
+Lcd Lists :;
+NT36672C_120HZ;
+HX_ILI7807S;
+
+TouchPanel Lists :;
+;
+
+Carmera Lists :;
+imx766_mipi_raw;
+s5khp3sp_mipi_raw;
+hi847_mipi_raw;
+hi847s_mipi_raw;
+hi5022sp_mipi_raw;
+hi5022sq_mipi_raw;
+ov64b40_mipi_raw;
+
+Memory Lists :;
+K3LK6K60BM_BGCP;
+H58G76BK8HX095;
+H58GU6MK6HX042;
+MT62F2G64D8CL_026;
+K3LK4K40CM_BGCP;
+MT62F1536M64D8CL_026;
