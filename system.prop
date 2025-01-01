@@ -1,0 +1,45 @@
+####### generate by lopestom #######
+# Fstab
+ro.postinstall.fstab.prefix=/system
+# USB MTP
+ro.sys.usb.storage.type=mtp
+# MTK
+ro.vendor.mediatek.platform=MT6895
+ro.vendor.mtk_f2fs_enable=1
+ro.vendor.mtk_emmc_support=1
+ro.hardware.egl=meow
+# Crypto
+ro.crypto.volume.filenames_mode=aes-256-cts
+#
+#ro.crypto.metadata.enabled=true
+#ro.crypto.support_metadata_encrypt=true
+#ro.crypto.uses_fs_ioc_add_encryption_key=true
+#ro.crypto.volume.metadata.method=dm-default-key
+#ro.crypto.dm_default_key.options_format.version=2
+#ro.crypto.volume.options=::v2
+# TEE & Gatekeeper & Keymaster
+ro.vendor.mtk_trustkernel_tee_support=1
+ro.hardware.kmsetkey=trustkernel
+ro.hardware.gatekeeper=trustkernel
+keymaster_ver=4.1
+ro.tee_support=1
+ro.vendor.trustkernel.attest_ids=1
+# from device
+# TANK3 start
+ro.vendor.build.real_version=TANK3_20240805_2112
+ro.agui.real_version=TANK3_20240805_2112
+ro.vendor.build.custom_version=TANK3_20240805_2117
+ro.agui.device_name=TANK 3
+ro.agui.platform_name=mt6895
+ro.agui.version_release=12
+#
+ro.sdcard_support=yes
+ro.is.agui.project=yes
+ro.agui.fast_charge_support=yes
+ro.agui.show_sn=yes
+ro.agui_tee=TRUSTKERNEL
+ro.tee.rkp_support=true
+#
+ro.vendor.mtk_mvpu_security_support=0
+ro.vendor.mtk_fast_charging_support=1
+####### generate by lopestom #######
