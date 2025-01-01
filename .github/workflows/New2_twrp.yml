@@ -106,4 +106,4 @@ jobs:
          MANIFEST: twrp-12.1
          Device: TANK3
          Build: vendor_bootimage
-         DT Branch: twrp-1
+         DT Branch: twrp-test
