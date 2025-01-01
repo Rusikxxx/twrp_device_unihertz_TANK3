@@ -1,0 +1,85 @@
+import /init.recovery.trustkernel.rc
+import /init.recovery.project.rc
+
+on init
+    setprop sys.usb.configfs 1
+    setprop sys.usb.controller "11201000.usb0"
+    setprop sys.usb.ffs.aio_compat 1
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+    setprop crypto.ready 1
+
+on fs
+    install_keyring
+
+on fs && property:ro.debuggable=0
+    # distinguish USB shoulde connect or not, i.e. CDP vs SDP
+    # set charging free due to it wait for USB activation
+
+# We need vold early for metadata encryption
+on early-fs
+    start vold
+
+on late-fs
+    # Mount RW partitions which need run fsck
+    mount_all /first_stage_ramdisk/fstab.mt6895 --late
+
+on boot
+    exec u:r:update_engine:s0 root root -- /system/bin/mtk_plpath_utils
+
+on post-fs
+    start boot-hal-1-2
+    symlink /dev/block/platform/bootdevice /dev/block/bootdevice
+
+
+service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+    interface android.hardware.gatekeeper@1.0::IGatekeeper default
+    class hal
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+on property:hwservicemanager.ready=true && property:vendor.sys.listeners.registered=true
+    start vendor.keymint-trustkernel
+
+service vendor.keymint-trustkernel /vendor/bin/hw/android.hardware.security.keymint-service.trustkernel
+    user root
+    group root
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    disabled
+    seclabel u:r:recovery:s0
+
+on property:ro.crypto.state=encrypted && property:hwservicemanager.ready=true
+    start teed
+
+on property:crypto.ready=1
+    start vendor.keymint-trustkernel
+    start teed
+
+on property:hwservicemanager.ready=true
+    start vendor.keymint-trustkernel
+    start vendor.gatekeeper-1-0
+
+on property:ro.crypto.state=unsupported
+    stop teed
+    stop vendor.keymint-trustkernel
+    stop vendor.gatekeeper-1-0
+
+on property:ro.crypto.state=unencrypted
+    stop teed
+    stop vendor.keymint-trustkernel
+    stop vendor.gatekeeper-1-0
+
+on property:twrp.decrypt.done=true
+    stop teed
+    stop vendor.keymint-trustkernel
+    stop vendor.gatekeeper-1-0
+
+on property:crypto.ready=0
+    stop teed
+    stop vendor.keymint-trustkernel
+    stop vendor.gatekeeper-1-0
+
+on boot
+    start health-hal-2-1
+    setprop sys.usb.config adb
