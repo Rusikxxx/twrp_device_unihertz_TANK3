@@ -100,5 +100,5 @@ PRODUCT_PACKAGES += \
 PRODUCT_SOONG_NAMESPACES += $(LOCAL_PATH)
 
 # Fix missing json configs
-PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/cgroups.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/cgroups.json
-PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/task_profiles.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/task_profiles.json
+#PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/cgroups.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/cgroups.json
+#PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/task_profiles.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/task_profiles.json
