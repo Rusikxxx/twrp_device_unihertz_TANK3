@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+LOCAL_PATH := device/8849/TANK3
 DEVICE_PATH := device/8849/TANK3
 
 # API
@@ -41,10 +41,16 @@ AB_OTA_PARTITIONS += \
     vendor_dlkm
     
 PRODUCT_PACKAGES += \
+    otapreopt_script \
+    cppreopts.sh \
     update_engine \
-    update_engine_sideload \
     update_verifier \
-    checkpoint_gc
+    update_engine_sideload \
+    update_engine_client \
+    checkpoint_gc \
+    libgptutils \
+    libz \
+    libcutils
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -61,20 +67,21 @@ AB_OTA_POSTINSTALL_CONFIG += \
 # Additional Target Libraries
 TARGET_RECOVERY_DEVICE_MODULES += \
     android.hardware.keymaster@4.1 \
-    android.hardware.vibrator-V1-ndk_platform \
     libion \
     libxml2
 
 TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.keymaster@4.1.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.vibrator-V1-ndk_platform.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so
 
 # Bootctrl
 PRODUCT_PACKAGES += \
+    android.hardware.boot@1.2-service \
     android.hardware.boot@1.2-mtkimpl \
     android.hardware.boot@1.2-mtkimpl.recovery \
+    bootctrl \
+    bootctrl.recovery \
     bootctrl.mt6895 \
     bootctrl.mt6895.recovery \
     libmtk_bsg \
@@ -97,7 +104,14 @@ PRODUCT_PACKAGES += \
 
 # Keymaster
 PRODUCT_PACKAGES += \
+    android.hardware.keymaster@4.0.vendor \
     android.hardware.keymaster@4.1
+
+# Gatekeeper
+PRODUCT_PACKAGES += \
+    android.hardware.gatekeeper@1.0.vendor \
+    android.hardware.gatekeeper@1.0-impl \
+    android.hardware.gatekeeper@1.0-service
 
 # Keymint
 PRODUCT_PACKAGES += \
@@ -123,3 +137,7 @@ PRODUCT_ENFORCE_VINTF_MANIFEST := true
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
+
+# Fix missing json configs
+PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/cgroups.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/cgroups.json
+PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/task_profiles.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/task_profiles.json
