@@ -80,11 +80,11 @@
 
 # TrustonicTEE driver
 /dev/mobicore             0600   system     system
-/dev/mobicore-user        0666   system     system
-/dev/t-base-tui           0666   system     system
+/dev/mobicore-user        0660   system     system
+/dev/t-base-tui           0660   system     system
 
 # teeperf driver
-/dev/teeperf              0666   system     system
+/dev/teeperf              0660   system     system
 
 #v4l2 device
 /dev/video*      0660 camera system
@@ -105,7 +105,11 @@
 /dev/dri/card0            0660   system     system
 
 # MDDP node
-/dev/mddp                 0660   system     system
+/dev/mddp                 0640   system     system
+
+# cpu hotplug
+/sys/devices/system/cpu/cpu* cpufreq/sugov_ext/down_rate_limit_us 0664 system system
+/sys/devices/system/cpu/cpu* cpufreq/sugov_ext/up_rate_limit_us 0664 system system
 
 # add the read write right of ttyUSB*
 /dev/bus/usb/*     	  0660   root       usb
@@ -238,6 +242,7 @@
 #TrustKernel
 /dev/tkcore_admin         0600   system     system
 /dev/tkcore_client        0660   root       system
+/dev/tkcore_fp            0660   root       system
 /dev/rpmb0                0660   root       system
 /dev/mmcblk0rpmb          0660   root       system
 # trustkernel tee patch end
