@@ -14,6 +14,8 @@ ro.crypto.volume.filenames_mode=aes-256-cts
 # TEE
 ro.vendor.mtk_trustkernel_tee_support=1
 ro.hardware.kmsetkey=trustkernel
+ro.tee_support=1
+ro.vendor.trustkernel.attest_ids=1
 
 # Misc
 ro.vendor.mediatek.platform=MT6895
