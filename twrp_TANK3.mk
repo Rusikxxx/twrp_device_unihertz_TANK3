@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+LOCAL_PATH := device/8849/TANK3
+
 # Configure base.mk
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 
@@ -25,6 +27,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_ven
 
 # Configure emulated_storage.mk
 $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+
+# Enable userspace reboot
+$(call inherit-product, $(SRC_TARGET_DIR)/product/userspace_reboot.mk)
 
 # Configure twrp config common.mk
 $(call inherit-product, vendor/twrp/config/common.mk)
@@ -46,10 +51,9 @@ PRODUCT_MODEL := TANK 3
 PRODUCT_MANUFACTURER := OBLUE
 PRODUCT_RELEASE_NAME := TANK3
 
-# Hide Reflash TWRP & FUSE passthrough
+# Hide Reflash TWRP
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.twrp.vendor_boot=true \
-    persist.sys.fuse.passthrough.enable=true
+    ro.twrp.vendor_boot=true
 
 PRODUCT_GMS_CLIENTID_BASE := android-agold
 
