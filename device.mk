@@ -4,6 +4,7 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 #
+
 LOCAL_PATH := device/8849/TANK3
 
 # Dynamic
