@@ -5,6 +5,8 @@
 # you may not use this file except in compliance with the License.
 #
 
+LOCAL_PATH := device/8849/TANK3
+
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
