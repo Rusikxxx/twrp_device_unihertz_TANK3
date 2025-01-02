@@ -1,0 +1,182 @@
+name: PitchBlack Recovery Build 2024
+
+on:
+  workflow_dispatch:
+    inputs:
+      MANIFEST_BRANCH:
+        description: 'PBRP Manifest Branch'
+        required: true
+        default: 'android-14.0'
+        type: choice
+        options:
+        - android-14.0
+        - android-12.1
+        - android-11.0
+      DEVICE_TREE:
+        description: 'Custom Recovery Tree' # Your already made Device Tree for TWRP
+        required: true
+        default: 'https://github.com/lopestom/twrp_device_unihertz_TANK3'
+      DEVICE_TREE_BRANCH:
+        description: 'Custom Recovery Tree Branch' # Your Device Tree Branch, make sure it's right.
+        required: true
+        default: 'twrp-pbrp'
+      DEVICE_PATH:
+        description: 'Specify your Device Path' # As is, just like your DEVICE_PATH in your BoardConfig.mk
+        required: true
+        default: 'device/8849/TANK3'
+      DEVICE_NAME:
+        description: 'Specify your Device Codename' # As is, just like your PRODUCT_DEVICE in your device tree.
+        required: true
+        default: 'TANK3' 
+      BUILD_TARGET:
+        description: 'Specify your Build Target' # Pick among boot, recovery and vendor_boot
+        required: true
+        default: 'vendorboot'
+        type: choice
+        options:
+        - boot
+        - recovery
+        - vendorboot
+      LDCHECK:
+        description: 'Use LDCHECK'
+        required: false
+        default: 'false'
+        type: boolean
+      LDCHECKPATH:
+        description: 'Path of blobs to check' # Use it know what kind of dependencies your missing for decryption blobs.
+        required: true
+        default: 'vendor/bin/teed'
+
+jobs:
+  build:
+    if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-latest
+    steps:
+    - name: Display Run Parameters
+      run: |
+        echo "::group::User Environment Variables"
+        echo "Manifest Branch: ${{ github.event.inputs.MANIFEST_BRANCH }}"
+        echo "Device Tree: ${{ github.event.inputs.DEVICE_TREE }}"
+        echo "Device Branch: ${{ github.event.inputs.DEVICE_TREE_BRANCH }}"
+        echo "Device Path: ${{ github.event.inputs.DEVICE_PATH }}"
+        echo "Device Name: ${{ github.event.inputs.DEVICE_NAME }}"
+        echo "Build Target: ${{ github.event.inputs.BUILD_TARGET }}"
+        echo "::endgroup::"
+
+    - name: Checkout
+      uses: actions/checkout@master
+
+    # You might want to Checkout your repo first, but not mandatory
+    - name: Check Out
+      uses: actions/checkout@v4
+
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Cleanup
+      uses: rokibhasansagar/slimhub_actions@main
+      
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@master
+      with:
+        swap-size-gb: 12
+
+    - name: Prepare the environment
+      run: |
+        sudo apt update
+        sudo apt -y upgrade
+        sudo apt -y install gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses5-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libwxgtk3.0-gtk3-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev libtinfo5 libgflags-dev python3
+        sudo add-apt-repository universe
+        sudo apt -y install libncurses5
+
+    - name: Install OpenJDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '8'
+
+    - name: Install Git-Repo
+      run: |
+        mkdir ~/bin
+        curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+        chmod a+x ~/bin/repo
+        sudo ln -sf ~/bin/repo /usr/bin/repo
+
+    - name: Initialize Repo
+      run: |
+        mkdir workspace
+        cd workspace
+        git config --global user.name "lopestom"
+        git config --global user.email "guillopes2002@gmail.com"
+        repo init --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b ${{ github.event.inputs.MANIFEST_BRANCH }}
+
+    - name: Repo Sync
+      run: |
+        repo sync -j$(nproc --all) --force-sync
+      working-directory: workspace
+      
+    - name: Install Python 2
+      run: |
+        sudo apt -y install python2
+   
+    - name: Checkout device tree
+      uses: actions/checkout@v4
+      with:
+         path: workspace/device/8849/TANK3
+
+#    - name: Commit
+#      run: |
+#        cd workspace
+#        git clone ${{ github.event.inputs.DEVICE_TREE }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+#        cd ${{ github.event.inputs.DEVICE_PATH }}
+#         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+#    - name: Check Build Makefile
+#      run: |
+#        if [ -f ${{ github.event.inputs.DEVICE_PATH }}/twrp_${{ github.event.inputs.DEVICE_NAME}}.mk ]; then
+#            echo "DEVICE_MAKEFILE=twrp_${{ github.event.inputs.DEVICE_NAME }}" >> $GITHUB_ENV
+#        elif [ -f ${{ github.event.inputs.DEVICE_PATH }}/pb_${{ github.event.inputs.DEVICE_NAME}}.mk ]; then
+#            echo "DEVICE_MAKEFILE=pb_${{ github.event.inputs.DEVICE_NAME }}" >> $GITHUB_ENV
+#        else
+#            echo "No recovery makefile file found!"
+#        fi
+#      continue-on-error: true
+#      working-directory: workspace
+
+    - name: Building Image
+      run: |
+        source build/envsetup.sh
+        export ALLOW_MISSING_DEPENDENCIES=true
+        lunch pb_${{ github.event.inputs.DEVICE_NAME }}-eng
+        mka ${{ github.event.inputs.BUILD_TARGET }}image
+      working-directory: workspace
+
+    - name: Set Build Date # Output will be use in Release
+      run: |
+        echo "BUILD_DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
+
+    - name: Upload to Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*boot*.img
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/PBRP*.zip
+          out/target/product/TANK3/vendor_boot.img
+        name: Unofficial PBRP for ${{ github.event.inputs.DEVICE_NAME }} // ${{ env.BUILD_DATE }}
+        tag_name: ${{ github.run_id }}
+        body: |
+          Build: ${{ github.event.inputs.MANIFEST_BRANCH }}
+          Device: [Device Tree/Branch](${{ github.event.inputs.DEVICE_TREE }}/tree/${{ github.event.inputs.DEVICE_TREE_BRANCH }})      env:
+      env:
+        GITHUB_TOKEN: ${{ secrets.TEST }}
+  
+    - name: Run LDCheck
+      if: github.event.inputs.LDCHECK == 'true'
+      run: |
+        cd tools
+        mv -n libneeds ${GITHUB_WORKSPACE}/workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery/root/
+        mv -n ldcheck ${GITHUB_WORKSPACE}/workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery/root/
+        cd ../workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery/root
+        python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.LDCHECKPATH }}
+        echo "Done checking missing dependencies. Review, and reconfigure your tree."
+      continue-on-error: true
