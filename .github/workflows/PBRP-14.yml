@@ -70,6 +70,7 @@ jobs:
        cd twrp
        repo init -u $MANIFEST --depth=1
        sed -i '/<remove-project name="platform\/external\/gflags"  \/>/d' .repo/manifests/remove-minimal.xml
+       sed -i '/<remove-project name="platform\/external\/asuite"  \/>/d' .repo/manifests/remove-minimal.xml
        repo sync -c -j8 --force-sync --no-clone-bundle --no-tags
        rm -rf .repo
              
@@ -91,8 +92,15 @@ jobs:
       run: |
        PATH=~/bin:$PATH
        cd twrp
-       export ALLOW_MISSING_DEPENDENCIES=true && source build/envsetup.sh && lunch twrp_TANK3-eng && mka $TARGET -j$(nproc --all) 
-       cp  out/target/product/TANK3/vendor_boot.img    out/target/product/TANK3/vendor_boot-TANK3-NoCrypt-$(date +"%Y%m%d").img
+       export ALLOW_MISSING_DEPENDENCIES=true && \
+       export LC_ALL="C" && \
+       unset TOP ; unset OUT ; unset ${!TARGET_*} ; unset ${!BOARD_*} ; \
+       unset ${!PRODUCT_*} ; unset ${!OUT_*} ; unset ${!HOST_*} ; unset ${!KERNEL_*} ; \
+       unset ${!SOONG_*} ; unset ${!CLANG_*} ; unset ${!CROSS_*} ; unset ${!TWRP_*} ; \
+       unset ${!TW_*} ; unset ${!PB_*} ; unset ${!OF_*} ; unset ${!FOX_*} && \
+       unset NOT_ORANGEFOX && \
+       source build/envsetup.sh && lunch twrp_TANK3-eng && mka $TARGET -j$(nproc --all) 
+       cp  out/target/product/TANK3/vendor_boot.img    out/target/product/TANK3/vendor_boot-TANK3-PBRP-$(date +"%Y%m%d").img
 
     - name: Set Build Date # Output will be use in Release
       run: |
