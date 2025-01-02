@@ -6,9 +6,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/twrp_TANK3.mk
+    $(LOCAL_DIR)/pb_TANK3.mk
 
 COMMON_LUNCH_CHOICES := \
-    twrp_TANK3-user \
-    twrp_TANK3-userdebug \
-    twrp_TANK3-eng
+    pb_TANK3-user \
+    pb_TANK3-userdebug \
+    pb_TANK3-eng
