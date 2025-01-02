@@ -1,4 +1,4 @@
-name: Building TWRP
+name: Building twrp-14
 
 on:
 #  release:
@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 env:
-  MANIFEST: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp -b twrp-12.1
+  MANIFEST: https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp -b twrp-14
   DEVICE: TANK3
   DT_LINK: https://github.com/lopestom/twrp_device_unihertz_TANK3
   DT_PATH: device/8849/TANK3
@@ -44,7 +44,7 @@ jobs:
       run: |
        sudo apt update
        sudo apt -y upgrade
-       sudo apt -y install gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev lib32ncurses5-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libncurses5-dev libsdl1.2-dev libwxgtk3.0-gtk3-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev libncurses5 python3
+       sudo apt -y install gperf gcc-multilib gcc-10-multilib g++-multilib g++-10-multilib libc6-dev x11proto-core-dev libx11-dev tree lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc bc ccache lib32readline-dev lib32z1-dev liblz4-tool libsdl1.2-dev libxml2 lzop pngcrush schedtool squashfs-tools imagemagick libbz2-dev lzma ncftp qemu-user-static libstdc++-10-dev python3
        git config --global user.name "lopestom"
        git config --global user.email "guillopes2002@gmail.com"
         
@@ -67,8 +67,8 @@ jobs:
        mkdir twrp
        cd twrp
        repo init -u $MANIFEST --depth=1
-       sed -i '/<remove-project name="platform\/external\/asuite"  \/>/d' .repo/manifests/remove-minimal.xml
        sed -i '/<remove-project name="platform\/external\/gflags"  \/>/d' .repo/manifests/remove-minimal.xml
+       sed -i '/<remove-project name="platform\/external\/asuite"  \/>/d' .repo/manifests/remove-minimal.xml
        repo sync -c -j8 --force-sync --no-clone-bundle --no-tags
        rm -rf .repo
              
@@ -86,13 +86,20 @@ jobs:
       run: |
        PATH=~/bin:$PATH
        cd twrp
-       export ALLOW_MISSING_DEPENDENCIES=true && source build/envsetup.sh && lunch twrp_TANK3-eng && mka $TARGET -j$(nproc --all)
+       export ALLOW_MISSING_DEPENDENCIES=true && \
+       export LC_ALL="C" && \
+       unset TOP ; unset OUT ; unset ${!TARGET_*} ; unset ${!BOARD_*} ; \
+       unset ${!PRODUCT_*} ; unset ${!OUT_*} ; unset ${!HOST_*} ; unset ${!KERNEL_*} ; \
+       unset ${!SOONG_*} ; unset ${!CLANG_*} ; unset ${!CROSS_*} ; unset ${!TWRP_*} ; \
+       unset ${!TW_*} ; unset ${!PB_*} ; unset ${!OF_*} ; unset ${!FOX_*} && \
+       unset NOT_ORANGEFOX && \
+       source build/envsetup.sh && lunch twrp_TANK3-eng && mka $TARGET -j$(nproc --all)
        cp  out/target/product/TANK3/vendor_boot.img    out/target/product/TANK3/vendor_boot-TANK3-$(date +"%Y%m%d").img  
 
     - name: Set Build Date # Output will be use in Release
       run: |
         echo "BUILD_DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
-             
+        
     - name: Release recovery image
       uses: softprops/action-gh-release@v2
       env:
@@ -106,4 +113,4 @@ jobs:
          MANIFEST: twrp-12.1
          Device: TANK3
          Build: vendor_bootimage
-         DT Branch: twrp-test
+         DT Branch: twrp-14
