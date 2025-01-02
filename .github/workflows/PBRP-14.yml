@@ -99,7 +99,7 @@ jobs:
        unset ${!SOONG_*} ; unset ${!CLANG_*} ; unset ${!CROSS_*} ; unset ${!TWRP_*} ; \
        unset ${!TW_*} ; unset ${!PB_*} ; unset ${!OF_*} ; unset ${!FOX_*} && \
        unset NOT_ORANGEFOX && \
-       source build/envsetup.sh && lunch twrp_TANK3-eng && mka $TARGET -j$(nproc --all) 
+       source build/envsetup.sh && lunch pb_TANK3-eng && mka $TARGET -j$(nproc --all) 
        cp  out/target/product/TANK3/vendor_boot.img    out/target/product/TANK3/vendor_boot-TANK3-PBRP-$(date +"%Y%m%d").img
 
     - name: Set Build Date # Output will be use in Release
