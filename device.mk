@@ -138,6 +138,6 @@ PRODUCT_ENFORCE_VINTF_MANIFEST := true
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
 
-# Fix missing json configs
-PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/cgroups.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/cgroups.json
-PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/task_profiles.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/task_profiles.json
+# Fix missing json configs ## This cause errors in building copy files to root\etc
+#PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/cgroups.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/cgroups.json
+#PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/task_profiles.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/task_profiles.json
