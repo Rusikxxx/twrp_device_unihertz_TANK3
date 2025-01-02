@@ -78,7 +78,7 @@ BOARD_USES_VENDOR_DLKMIMAGE := true
 
 # Workaround for error copying vendor files to recovery ramdisk
 TARGET_COPY_OUT_VENDOR := vendor
-TARGET_COPY_OUT_SYSTEM_DLKM := system_dlkm
+#TARGET_COPY_OUT_SYSTEM_DLKM := system_dlkm
 TARGET_COPY_OUT_PRODUCT := product
 TARGET_COPY_OUT_SYSTEM_EXT := system_ext
 
