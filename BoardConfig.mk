@@ -150,7 +150,7 @@ BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_SUPPRESS_SECURE_ERASE := true
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
-TARGET_RECOVERY_FSTAB := $(BASE_DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 
 # Screen density
 TARGET_SCREEN_DENSITY := 480
@@ -189,7 +189,7 @@ TW_DEVICE_VERSION := 8849 TANK 3_20240422 - lopestom
 
 
 TW_USE_LEGACY_BATTERY_SERVICES := true
-TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone53/temp"
+TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone29/temp
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.%d/file
 #TW_BACKUP_EXCLUSIONS := /data/fonts/files
 TW_BACKUP_EXCLUSIONS := /data/fonts
