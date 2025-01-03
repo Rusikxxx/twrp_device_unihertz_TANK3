@@ -69,8 +69,8 @@ jobs:
        mkdir twrp
        cd twrp
        repo init -u $MANIFEST --depth=1
-       sed -i '/<remove-project name="platform\/external\/gflags"  \/>/d' .repo/manifests/remove-minimal.xml
-       sed -i '/<remove-project name="platform\/external\/asuite"  \/>/d' .repo/manifests/remove-minimal.xml
+#       sed -i '/<remove-project name="platform\/external\/gflags"  \/>/d' .repo/manifests/remove-minimal.xml
+#       sed -i '/<remove-project name="platform\/external\/asuite"  \/>/d' .repo/manifests/remove-minimal.xml
        repo sync -c -j8 --force-sync --no-clone-bundle --no-tags
        rm -rf .repo
              
