@@ -15,10 +15,12 @@ on fs
     mkdir /mnt/vendor/protect_s 0770 system system
     mkdir /mnt/vendor/nvdata    0771 system system
     mkdir /mnt/vendor/nvcfg     0771 system system
+    mkdir /mnt/vendor/persist 0770 system system
     mount ext4 /dev/block/by-name/protect1 /mnt/vendor/protect_f rw wait
     mount ext4 /dev/block/by-name/protect2 /mnt/vendor/protect_s rw wait
     mount ext4 /dev/block/by-name/nvdata   /mnt/vendor/nvdata    rw wait
     mount ext4 /dev/block/by-name/nvcfg    /mnt/vendor/nvcfg     rw wait
+    mount ext4 /dev/block/by-name/persist    /mnt/vendor/persist     rw wait
     mkdir /mnt/vendor/protect_f/tee_twrp 0755 system system
     exec u:r:recovery:s0 system -- /vendor/bin/init_trustkernel_twrp.sh
 
@@ -61,13 +63,13 @@ service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
     disabled
     seclabel u:r:recovery:s0
 
-service vendor.gatekeeper /vendor/bin/hw/android.hardware.gatekeeper-service.trustkernel
-    class hal
-    interface aidl android.hardware.gatekeeper.IGatekeeper/default
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
+#service vendor.gatekeeper /vendor/bin/hw/android.hardware.gatekeeper-service.trustkernel
+#    class hal
+#    interface aidl android.hardware.gatekeeper.IGatekeeper/default
+#    user root
+#    group root
+#    disabled
+#    seclabel u:r:recovery:s0
 
 service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     interface android.hardware.gatekeeper@1.0::IGatekeeper default
@@ -77,16 +79,16 @@ service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-ser
     disabled
     seclabel u:r:recovery:s0    
 
-service vendor.keymint /vendor/bin/hw/android.hardware.security.keymint@3.0-service.trustkernel
-    class early_hal
-    interface aidl android.hardware.security.keymint.IKeyMintDevice/default
-    interface aidl android.hardware.security.keymint.IRemotelyProvisionedComponent/default
-    interface aidl android.hardware.security.sharedsecret.ISharedSecret/default
-    interface aidl android.hardware.security.secureclock.ISecureClock/default
-    user root
-    group root drmrpc
-    disabled
-    seclabel u:r:recovery:s0
+#service vendor.keymint /vendor/bin/hw/android.hardware.security.keymint@3.0-service.trustkernel
+#    class early_hal
+#    interface aidl android.hardware.security.keymint.IKeyMintDevice/default
+#    interface aidl android.hardware.security.keymint.IRemotelyProvisionedComponent/default
+#    interface aidl android.hardware.security.sharedsecret.ISharedSecret/default
+#    interface aidl android.hardware.security.secureclock.ISecureClock/default
+#    user root
+#    group root drmrpc
+#    disabled
+#    seclabel u:r:recovery:s0
 
 service vendor.keymint-trustkernel /vendor/bin/hw/android.hardware.security.keymint-service.trustkernel
     class early_hal
@@ -100,40 +102,40 @@ service vendor.keymint-trustkernel /vendor/bin/hw/android.hardware.security.keym
     seclabel u:r:recovery:s0
 
 on property:crypto.ready=1
-    start vendor.keymint
+#    start vendor.keymint
     start vendor.keymint-trustkernel
 
 on property:vendor.sys.listener.registered=true
     #start teed
-    start vendor.gatekeeper
-    start vendor.keymint
+#    start vendor.gatekeeper
+#    start vendor.keymint
     start vendor.gatekeeper-1-0
     start vendor.keymint-trustkernel
    
 on property:hwservicemanager.ready=true
     #start teed
-    start vendor.gatekeeper
-    start vendor.keymint
+#    start vendor.gatekeeper
+#    start vendor.keymint
     start vendor.gatekeeper-1-0
     start vendor.keymint-trustkernel
 
 on property:ro.crypto.state=unsupported
     stop teed
-    stop vendor.gatekeeper
-    stop vendor.keymint
+#    stop vendor.gatekeeper
+#    stop vendor.keymint
     stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
 
 on property:ro.crypto.state=unencrypted
     stop teed
-    stop vendor.gatekeeper
-    stop vendor.keymint
+#    stop vendor.gatekeeper
+#    stop vendor.keymint
     stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
 
 on property:twrp.decrypt.done=true
     stop teed
-    stop vendor.gatekeeper
-    stop vendor.keymint
+#    stop vendor.gatekeeper
+#    stop vendor.keymint
     stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
