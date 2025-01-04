@@ -51,8 +51,7 @@ Some tests was made:
 <details><summary>TWRP Pictures - Click to open</summary>
 <p>
 
-
-
+![Screenshot_2025-01-03-17-07-43_resized](https://github.com/user-attachments/assets/f797dce4-09b9-4fa4-bc61-471cf701a8e5) ![Screenshot_2025-01-03-17-09-23_resized](https://github.com/user-attachments/assets/03e3bf8c-1250-4ba0-af67-82cc199ae0f1)
 </p>
 </details>
 
