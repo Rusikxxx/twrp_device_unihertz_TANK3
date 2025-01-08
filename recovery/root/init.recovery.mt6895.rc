@@ -93,29 +93,50 @@ service vendor.keymint-trustkernel /vendor/bin/hw/android.hardware.security.keym
 #    interface android.hardware.keymaster@4.0::IKeymasterDevice default
 #    interface android.hardware.keymaster@4.1::IKeymasterDevice default
 
+service keymaster_attestation-1-1 /vendor/bin/hw/vendor.mediatek.hardware.keymaster_attestation@1.1-service
+    interface vendor.mediatek.hardware.keymaster_attestation@1.0::IKeymasterDevice default
+    interface vendor.mediatek.hardware.keymaster_attestation@1.1::IKeymasterDevice default
+    class hal
+    user system
+    group system
+    disabled
+    seclabel u:r:recovery:s0
+
 on property:crypto.ready=1
     start vendor.keymint-trustkernel
+    start keymaster_attestation-1-1
 
 on property:vendor.sys.listener.registered=true
     start vendor.gatekeeper-1-0
     start vendor.keymint-trustkernel
+    start keymaster_attestation-1-1
    
 on property:hwservicemanager.ready=true
     #start teed
     start vendor.gatekeeper-1-0
     start vendor.keymint-trustkernel
+    start keymaster_attestation-1-1
 
 on property:ro.crypto.state=unsupported
     stop teed
     stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
+    stop keymaster_attestation-1-1
 
 on property:ro.crypto.state=unencrypted
     stop teed
     stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
+    stop keymaster_attestation-1-1
 
-on property:twrp.decrypt.done=true
+on property:twrp.decrypt.done=true && on property:twrp.all.users.decrypted=true
     stop teed
     stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
+    stop keymaster_attestation-1-1
+
+on property:crypto.ready=0
+    stop teed
+    stop vendor.gatekeeper-1-0
+    stop vendor.keymint-trustkernel
+    stop keymaster_attestation-1-1
