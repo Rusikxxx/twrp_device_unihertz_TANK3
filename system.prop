@@ -12,10 +12,16 @@ ro.vendor.mtk_trustkernel_tee_support=1
 ro.hardware.kmsetkey=trustkernel
 ro.tee_support=1
 ro.vendor.trustkernel.attest_ids=1
-# Misc
-ro.vendor.mediatek.platform=MT6895
 # Gatekeeper
 ro.hardware.gatekeeper=trustkernel
+# Misc
+ro.vendor.mediatek.platform=MT6895
+ro.agui.platform_name=mt6895
+ro.agui.version_release=12
+ro.agui_tee=TRUSTKERNEL
+ro.vendor.mtk_f2fs_enable=1
+ro.vendor.mtk_emmc_support=1
+ro.hardware.egl=meow
 # Keymaster
 keymaster_ver=4.1
 ####### generate by lopestom #######
