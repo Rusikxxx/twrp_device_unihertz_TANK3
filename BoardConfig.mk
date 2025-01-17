@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2024 The TWRP Open Source Project
+# Copyright (C) 2025 The TWRP Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -122,6 +122,7 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_SUPPRESS_SECURE_ERASE := true
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
+RECOVERY_SDCARD_ON_DATA := true
 
 # Treble
 BOARD_VNDK_VERSION := current
