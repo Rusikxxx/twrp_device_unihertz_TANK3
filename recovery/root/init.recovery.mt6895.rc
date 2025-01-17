@@ -5,29 +5,27 @@ on init
     setprop sys.usb.controller "11201000.usb0"
     setprop sys.usb.ffs.aio_compat 1
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw:/system/lib64/hw
+    export LD_LIBRARY_PATH /system/bin:/vendor/bin:/vendor/bin/hw
 
 on fs
     wait /dev/block/platform/soc/112b0000.ufshci
     symlink /dev/block/platform/soc/112b0000.ufshci /dev/block/bootdevice
 
-    mkdir /mnt/vendor 0755 system system
-    mkdir /mnt/vendor/protect_f 0770 system system
-    mkdir /mnt/vendor/protect_s 0770 system system
-    mkdir /mnt/vendor/nvdata    0771 system system
-    mkdir /mnt/vendor/nvcfg     0771 system system
-    mkdir /mnt/vendor/persist 0770 system system
-    mount ext4 /dev/block/by-name/protect1 /mnt/vendor/protect_f rw wait
-    mount ext4 /dev/block/by-name/protect2 /mnt/vendor/protect_s rw wait
-    mount ext4 /dev/block/by-name/nvdata   /mnt/vendor/nvdata    rw wait
-    mount ext4 /dev/block/by-name/nvcfg    /mnt/vendor/nvcfg     rw wait
-    mount ext4 /dev/block/by-name/persist    /mnt/vendor/persist     rw wait
-    mkdir /mnt/vendor/protect_f/tee_twrp 0755 system system
-    exec u:r:recovery:s0 system -- /vendor/bin/init_trustkernel_twrp.sh
+    mkdir /mnt/vendor 0700 root root
+    mkdir /mnt/vendor/persist 0700 root root
+    mount ext4 /dev/block/by-name/persist /mnt/vendor/persist
 
-    install_keyring
-    setprop crypto.ready 1 
+# We need vold early for metadata encryption
+on early-fs
+    start vold
+
+on late-fs
+    # Mount RW partitions which need run fsck
+    mount_all /first_stage_ramdisk/fstab.mt6895 --late
 
 on post-fs
+    start boot-hal-1-2
+
     # Support A/B feature for EMMC and UFS boot region
     symlink /dev/block/sda /dev/block/mmcblk0boot0
     symlink /dev/block/sdb /dev/block/mmcblk0boot1
@@ -41,6 +39,16 @@ on post-fs
     symlink /dev/block/platform/bootdevice/by-name/preloader_b /dev/block/platform/bootdevice/by-name/preloader_ufs_b
     symlink /dev/block/platform/bootdevice/by-name/preloader_b /dev/block/by-name/preloader_ufs_b
 
+on property:persist.vendor.mtk.pl_lnk=1
+    symlink /dev/block/mapper/pl_a /dev/block/by-name/preloader_raw_a
+    symlink /dev/block/mapper/pl_b /dev/block/by-name/preloader_raw_b
+    symlink /dev/block/mapper/pl_a /dev/block/platform/bootdevice/by-name/preloader_raw_a
+    symlink /dev/block/mapper/pl_b /dev/block/platform/bootdevice/by-name/preloader_raw_b
+
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    install_keyring
+    setprop crypto.ready 1
+
 on post-fs-data
     # Touch Panel
 
@@ -48,12 +56,7 @@ on boot
     exec u:r:update_engine:s0 root root -- /system/bin/mtk_plpath_utils
     start mtk.plpath.utils.link
     start health-hal-2-1
-
-on property:persist.vendor.mtk.pl_lnk=1
-    symlink /dev/block/mapper/pl_a /dev/block/by-name/preloader_raw_a
-    symlink /dev/block/mapper/pl_b /dev/block/by-name/preloader_raw_b
-    symlink /dev/block/mapper/pl_a /dev/block/platform/bootdevice/by-name/preloader_raw_a
-    symlink /dev/block/mapper/pl_b /dev/block/platform/bootdevice/by-name/preloader_raw_b
+    setprop sys.usb.config adb
 
 service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
     class main
@@ -63,32 +66,14 @@ service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
     disabled
     seclabel u:r:recovery:s0
 
-#service vendor.gatekeeper /vendor/bin/hw/android.hardware.gatekeeper-service.trustkernel
-#    class hal
-#    interface aidl android.hardware.gatekeeper.IGatekeeper/default
-#    user root
-#    group root
-#    disabled
-#    seclabel u:r:recovery:s0
-
 service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     interface android.hardware.gatekeeper@1.0::IGatekeeper default
     class hal
     user root
     group root
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
     disabled
-    seclabel u:r:recovery:s0    
-
-#service vendor.keymint /vendor/bin/hw/android.hardware.security.keymint@3.0-service.trustkernel
-#    class early_hal
-#    interface aidl android.hardware.security.keymint.IKeyMintDevice/default
-#    interface aidl android.hardware.security.keymint.IRemotelyProvisionedComponent/default
-#    interface aidl android.hardware.security.sharedsecret.ISharedSecret/default
-#    interface aidl android.hardware.security.secureclock.ISecureClock/default
-#    user root
-#    group root drmrpc
-#    disabled
-#    seclabel u:r:recovery:s0
+    seclabel u:r:recovery:s0
 
 service vendor.keymint-trustkernel /vendor/bin/hw/android.hardware.security.keymint-service.trustkernel
     class early_hal
@@ -98,44 +83,56 @@ service vendor.keymint-trustkernel /vendor/bin/hw/android.hardware.security.keym
     interface aidl android.hardware.security.secureclock.ISecureClock/default
     user root
     group root drmrpc
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+service keymaster_attestation-1-1 /vendor/bin/hw/vendor.mediatek.hardware.keymaster_attestation@1.1-service
+    interface vendor.mediatek.hardware.keymaster_attestation@1.0::IKeymasterDevice default
+    interface vendor.mediatek.hardware.keymaster_attestation@1.1::IKeymasterDevice default
+    class hal
+    user root
+    group root
     disabled
     seclabel u:r:recovery:s0
 
 on property:crypto.ready=1
-#    start vendor.keymint
     start vendor.keymint-trustkernel
+    start keymaster_attestation-1-1
 
 on property:vendor.sys.listener.registered=true
     #start teed
-#    start vendor.gatekeeper
-#    start vendor.keymint
     start vendor.gatekeeper-1-0
     start vendor.keymint-trustkernel
-   
+    start keymaster_attestation-1-1
+
 on property:hwservicemanager.ready=true
     #start teed
-#    start vendor.gatekeeper
-#    start vendor.keymint
     start vendor.gatekeeper-1-0
     start vendor.keymint-trustkernel
+    start keymaster_attestation-1-1
 
 on property:ro.crypto.state=unsupported
     stop teed
-#    stop vendor.gatekeeper
-#    stop vendor.keymint
     stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
+    stop keymaster_attestation-1-1
 
 on property:ro.crypto.state=unencrypted
     stop teed
-#    stop vendor.gatekeeper
-#    stop vendor.keymint
     stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
+    stop keymaster_attestation-1-1
 
-on property:twrp.decrypt.done=true
+on property:twrp.all.users.decrypted=true
     stop teed
-#    stop vendor.gatekeeper
-#    stop vendor.keymint
     stop vendor.gatekeeper-1-0
     stop vendor.keymint-trustkernel
+    stop keymaster_attestation-1-1
+
+on property:crypto.ready=0
+    stop teed
+    stop vendor.gatekeeper-1-0
+    stop vendor.keymint-trustkernel
+    stop keymaster_attestation-1-1
