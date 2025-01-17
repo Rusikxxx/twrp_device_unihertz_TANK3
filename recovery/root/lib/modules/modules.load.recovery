@@ -70,6 +70,8 @@ mtk_panel_ext.ko
 ext_bias.ko
 panel-NT36672C_120HZ.ko
 panel-HX_ILI7807S.ko
+panel-ILI9922C_120HZ.ko
+panel-ILI9922C_120HZ_BLD.ko
 mediatek-drm-gateic.ko
 mediatek-drm-panel-drv.ko
 mediatek-drm.ko
@@ -103,6 +105,7 @@ mtk-pmic-keys.ko
 mtk-kpd.ko
 nt36672c.ko
 HX_ILI7807S_tp.ko
+ILI9922C_tp.ko
 regulator-vibrator.ko
 i2c-mt65xx.ko
 rtc-mt6685.ko

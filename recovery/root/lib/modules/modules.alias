@@ -101,6 +101,8 @@ alias of:N*T*Cmediatek,mt6359p-battery_oc_throttling mtk_battery_oc_throttling
 alias of:N*T*Cmediatek,mt6359p-battery_oc_throttlingC* mtk_battery_oc_throttling
 alias of:N*T*Cmediatek,mt6375-battery_oc_throttling mtk_battery_oc_throttling
 alias of:N*T*Cmediatek,mt6375-battery_oc_throttlingC* mtk_battery_oc_throttling
+alias of:N*T*Cchipone-tddi ILI9922C_tp
+alias of:N*T*Cchipone-tddiC* ILI9922C_tp
 alias of:N*T*Crichtek,rt5133 rt5133_regulator
 alias of:N*T*Crichtek,rt5133C* rt5133_regulator
 alias of:N*T*Cmediatek,mt8173-mtu3 mtu3
@@ -274,6 +276,8 @@ alias of:N*T*Cmediatek,mt6373-auxadc mtk_spmi_pmic_adc
 alias of:N*T*Cmediatek,mt6373-auxadcC* mtk_spmi_pmic_adc
 alias of:N*T*Csyscon-reboot-mode syscon_reboot_mode
 alias of:N*T*Csyscon-reboot-modeC* syscon_reboot_mode
+alias of:N*T*Cxingliang,ft8719,vdo panel_ILI9922C_120HZ_BLD
+alias of:N*T*Cxingliang,ft8719,vdoC* panel_ILI9922C_120HZ_BLD
 alias of:N*T*Cmediatek,mt6357-lbat_service pmic_lbat_service
 alias of:N*T*Cmediatek,mt6357-lbat_serviceC* pmic_lbat_service
 alias of:N*T*Cmediatek,mt6358-lbat_service pmic_lbat_service
@@ -739,6 +743,8 @@ alias of:N*T*Cmediatek,pwm-leds leds_mtk_pwm
 alias of:N*T*Cmediatek,pwm-ledsC* leds_mtk_pwm
 alias of:N*T*Cmediatek,mt6895-mmqos mmqos_mt6895
 alias of:N*T*Cmediatek,mt6895-mmqosC* mmqos_mt6895
+alias of:N*T*Cxingliang,ft8719,vdo panel_ILI9922C_120HZ
+alias of:N*T*Cxingliang,ft8719,vdoC* panel_ILI9922C_120HZ
 alias of:N*T*Cmediatek,common-disp-iommu-bank1 iommu_secure
 alias of:N*T*Cmediatek,common-disp-iommu-bank1C* iommu_secure
 alias of:N*T*Cmediatek,common-disp-iommu-bank2 iommu_secure
