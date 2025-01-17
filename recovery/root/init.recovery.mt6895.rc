@@ -11,8 +11,8 @@ on fs
     wait /dev/block/platform/soc/112b0000.ufshci
     symlink /dev/block/platform/soc/112b0000.ufshci /dev/block/bootdevice
 
-    mkdir /mnt/vendor 0700 root root
-    mkdir /mnt/vendor/persist 0700 root root
+    mkdir /mnt/vendor 0755 system system
+    mkdir /mnt/vendor/persist 0700 system system
     mount ext4 /dev/block/by-name/persist /mnt/vendor/persist
 
 # We need vold early for metadata encryption
@@ -49,9 +49,6 @@ on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     install_keyring
     setprop crypto.ready 1
 
-on post-fs-data
-    # Touch Panel
-
 on boot
     exec u:r:update_engine:s0 root root -- /system/bin/mtk_plpath_utils
     start mtk.plpath.utils.link
@@ -69,8 +66,8 @@ service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
 service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     interface android.hardware.gatekeeper@1.0::IGatekeeper default
     class hal
-    user root
-    group root
+    user system
+    group system
     setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
     disabled
     seclabel u:r:recovery:s0
@@ -81,8 +78,8 @@ service vendor.keymint-trustkernel /vendor/bin/hw/android.hardware.security.keym
     interface aidl android.hardware.security.keymint.IRemotelyProvisionedComponent/default
     interface aidl android.hardware.security.sharedsecret.ISharedSecret/default
     interface aidl android.hardware.security.secureclock.ISecureClock/default
-    user root
-    group root drmrpc
+    user system
+    group system
     setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib64/hw:/system/lib64:/sbin
     disabled
     oneshot
@@ -92,8 +89,8 @@ service keymaster_attestation-1-1 /vendor/bin/hw/vendor.mediatek.hardware.keymas
     interface vendor.mediatek.hardware.keymaster_attestation@1.0::IKeymasterDevice default
     interface vendor.mediatek.hardware.keymaster_attestation@1.1::IKeymasterDevice default
     class hal
-    user root
-    group root
+    user system
+    group system
     disabled
     seclabel u:r:recovery:s0
 
