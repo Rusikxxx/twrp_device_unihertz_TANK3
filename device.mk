@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2024 The TWRP Open Source Project
+# Copyright (C) 2025 The TWRP Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@ DEVICE_PATH := device/8849/TANK3
 
 # API
 PRODUCT_SHIPPING_API_LEVEL := 31
-PRODUCT_TARGET_VNDK_VERSION := 34
+PRODUCT_TARGET_VNDK_VERSION := 31
+#PRODUCT_TARGET_VNDK_VERSION := 34
 
 # A/B
 AB_OTA_UPDATER := true
@@ -137,7 +138,3 @@ PRODUCT_ENFORCE_VINTF_MANIFEST := true
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
-
-# Fix missing json configs ## This cause errors in building copy files to root\etc
-#PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/cgroups.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/cgroups.json
-#PRODUCT_COPY_FILES += $(TOP)/system/core/libprocessgroup/profiles/task_profiles.json:$(TARGET_COPY_OUT_RECOVERY)/root/etc/task_profiles.json
