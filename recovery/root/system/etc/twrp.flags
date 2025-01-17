@@ -1,4 +1,4 @@
-# Android fstab file by lopestom for Unihertz Tank 3 -- 8849 TANK3_20240422 -- TANK3_20240805_2112 -- TANK3_20240805_2117
+# Android fstab file by lopestom for Unihertz Tank 3 -- 8849 TANK3_20240422 -- TANK3_20250102_1022 -- TANK3_20250102_1026
 # mount point    fs    device    device2     device3    flags
 
 # User writeable partitions
