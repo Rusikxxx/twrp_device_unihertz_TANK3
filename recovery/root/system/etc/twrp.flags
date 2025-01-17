@@ -4,13 +4,14 @@
 # User writeable partitions
 /boot    emmc    /dev/block/by-name/boot            flags=display="Boot";slotselect;backup=1;flashimg=1
 /vendor_boot    emmc    /dev/block/by-name/vendor_boot            flags=display="vendor_boot";slotselect;backup=1;flashimg=1
-/vbmeta    emmc    /dev/block/by-name/vbmeta            flags=display="vbmeta";slotselect;backup=1;;flashimg=1
+/vbmeta    emmc    /dev/block/by-name/vbmeta            flags=display="vbmeta";slotselect;backup=1;flashimg=1
 /vbmeta_system    emmc    /dev/block/by-name/vbmeta_system        flags=display="vbmeta_system";slotselect;backup=1;flashimg=1
 /vbmeta_vendor    emmc    /dev/block/by-name/vbmeta_vendor        flags=display="vbmeta_vendor";slotselect;backup=1;flashimg=1
 
 # Firmware
 /dtbo      emmc   /dev/block/by-name/dtbo         flags=display="dtbo";slotselect;backup=1
 /metadata  ext4   /dev/block/by-name/metadata     flags=display="metadata";backup=1
+/metadata_img  emmc   /dev/block/by-name/metadata     flags=display="metadata_image";backup=1;flashimg=1
 /data      f2fs   /dev/block/by-name/userdata     flags=fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption
 /misc      emmc   /dev/block/by-name/misc         flags=display="misc";backup=1
 /proinfo   emmc   /dev/block/by-name/proinfo      flags=display="proinfo";backup=1
