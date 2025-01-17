@@ -66,14 +66,14 @@ service teed /vendor/bin/teed \
     --logpath /data/vendor/t6/tkcore.log \
     --proprefix vendor.trustkernel
     capabilities SYS_RAWIO
-    user root
-    group root
+    user system
+    group system
     class core
     seclabel u:r:recovery:s0
 
 service tee_check_keybox /vendor/bin/tee_check_keybox
-       user root
-       group root
+       user system
+       group system
        class main
        disabled
        oneshot
