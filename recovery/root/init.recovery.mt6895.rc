@@ -11,7 +11,6 @@ on fs
     wait /dev/block/platform/soc/112b0000.ufshci
     symlink /dev/block/platform/soc/112b0000.ufshci /dev/block/bootdevice
 
-    mkdir /mnt/vendor 0755 system system
     mkdir /mnt/vendor/persist 0700 system system
     mount ext4 /dev/block/by-name/persist /mnt/vendor/persist
 
