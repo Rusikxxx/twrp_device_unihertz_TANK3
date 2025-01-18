@@ -1,8 +1,11 @@
+[![GitHub Release](https://img.shields.io/github/release/lopestom/twrp_device_unihertz_TANK3.svg?logo=github)](https://github.com/lopestom/twrp_device_unihertz_TANK3/releases) [![GPLv3+](https://img.shields.io/badge/license-GPLv3+-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html) [![download](https://img.shields.io/github/downloads/lopestom/twrp_device_unihertz_TANK3/total)](https://github.com/lopestom/twrp_device_unihertz_TANK3/releases/download/12833551276/vendor_boot-TANK3-20250117.img)
+--------------------------------------------------------
 ### TWRP device tree for Unihertz Tank 3 -- 8849 TANK3 - kernel 5.10.198-android12-9-g4b1368c969f7
 
 This branch has ***encrypt/decrypt*** files and option to more test with that. 
 
-[![GPLv3+](https://img.shields.io/badge/license-GPLv3+-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/donate?token=Cxr1xP4Yr_XgV2E5lpC6Oo4qvbqmPiS3TgR6aiMEnQUgxr_nP242Z6zMqzeluThwaikNL-FXe8RnA1pT) to TeamWin so any donation is highly appreciated!
+
 
 ### Firmware version:
 2025010211_g91v95c2k_dfl_tee.zip - TANK3_20240422 -- TANK3_20250102_1022 -- TANK3_20250102_1026
@@ -91,3 +94,5 @@ export LC_ALL=C
 lunch twrp_TANK3-eng
 mka vendorbootimage -j$(nproc --all)
 ```
+
+**Repository Views** ![Views](https://profile-counter.glitch.me/twrp_device_unihertz_TANK3/count.svg)
