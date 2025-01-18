@@ -1,11 +1,11 @@
-### TWRP device tree for Unihertz Tank 3 -- 8849 TANK3 - kernel 5.10.198
+### TWRP device tree for Unihertz Tank 3 -- 8849 TANK3 - kernel 5.10.198-android12-9-g4b1368c969f7
 
 This branch has ***encrypt/decrypt*** files and option to more test with that. 
 
 [![GPLv3+](https://img.shields.io/badge/license-GPLv3+-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ### Firmware version:
-2024080522_g91v95c2k_dfl_tee.zip - TANK3_20240422 -- TANK3_20240805_2112 -- TANK3_20240805_2117
+2025010211_g91v95c2k_dfl_tee.zip - TANK3_20240422 -- TANK3_20250102_1022 -- TANK3_20250102_1026
 
 ## Device
 
@@ -21,29 +21,28 @@ Display | 6.79 inches, 60~120 hz
 Resolution | 1080 x 2460 pixels, 21:9 ratio (~396 ppi density)
 Processor | MediaTek Dimensity 8200 (MT6896)
 
-
 ![TANK 3](https://cdn-files.kimovil.com/default/0009/42/thumb_841135_default_big.jpg)
 
 ### Status
 
-The tester only install `vendor_boot-TANK3-2024mmdd.img` file to know if working.
+The tester only install `vendor_boot-TANK3-2025mmdd.img` file to know if working.
 <details><summary>History - Click to open</summary>
 <p>
 Some tests was made:
 
 ### First img Test
 
-* Initial DT: 2024-09-09
-   Compiled img file 2024mmdd and tested in 2024mmdd
+* Initial DT: 2024-09-09 update to 2025-01-09
+   Compiled img file 2025mmdd and tested in 2025mmdd
 
 - MT6789 - A12
   - Status: booted??
-  - [?] booted
+  - [X] booted
 
-   - vendor_boot-TANK3-2024mmdd.img => Working?? Not working?
-  - [?] Working
-  - [?] CPU/temperature correct
-  - [ ] Vibrator module - not work
+   - vendor_boot-TANK3-2025mmdd.img => Working?? Not working?
+  - [X] Working
+  - [X] CPU/temperature correct
+  - [ ] Vibrator module - not work - not need
 
 </p>
 </details>
@@ -51,7 +50,7 @@ Some tests was made:
 <details><summary>TWRP Pictures - Click to open</summary>
 <p>
 
-![Screenshot_2025-01-03-17-07-43_resized](https://github.com/user-attachments/assets/f797dce4-09b9-4fa4-bc61-471cf701a8e5) ![Screenshot_2025-01-03-17-09-23_resized](https://github.com/user-attachments/assets/03e3bf8c-1250-4ba0-af67-82cc199ae0f1)
+![1_resized](https://github.com/user-attachments/assets/7f842b39-6221-4e2d-9d65-d5d29e2279c2) ![Screenshot_2025-01-18-09-04-53_resized](https://github.com/user-attachments/assets/2641ee43-4c4a-4a68-a9b3-abb1baa95019) ![Screenshot_2025-01-18-09-05-06_resized](https://github.com/user-attachments/assets/a37417aa-696a-425b-be65-4cd643a2fb87) ![Screenshot_2025-01-18-08-11-24_resized](https://github.com/user-attachments/assets/655d0d9f-da02-4b7d-965b-e58a0428e1ec)
 </p>
 </details>
 
@@ -59,7 +58,7 @@ Some tests was made:
 
 - [Котфуций 🐾](https://4pda.to/forum/index.php?showuser=2166242) aka @Rusikxxx
 - [TeamWin](https://github.com/TeamWin) for TWRP SC.
-  * TWRP version 3.7.0_12
+  * TWRP version 3.7.1_12
 
 -----
 
