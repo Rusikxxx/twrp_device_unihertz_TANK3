@@ -14,6 +14,6 @@
 # limitations under the License.
 #
 
-PRODUCT_MAKEFILES := $(LOCAL_DIR)/twrp_TANK3.mk
+PRODUCT_MAKEFILES := $(LOCAL_DIR)/pb_TANK3.mk
 
-COMMON_LUNCH_CHOICES := twrp_TANK3-eng
+COMMON_LUNCH_CHOICES := pb_TANK3-eng
