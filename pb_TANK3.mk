@@ -32,7 +32,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/userspace_reboot.mk)
 
 # Configure twrp config common.mk
-$(call inherit-product, vendor/twrp/config/common.mk)
+$(call inherit-product, vendor/pb/config/common.mk)
 
 # Configure compression
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression.mk)
@@ -45,7 +45,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 
 # Device identifier
 PRODUCT_DEVICE := TANK3
-PRODUCT_NAME := twrp_TANK3
+PRODUCT_NAME := pb_TANK3
 PRODUCT_BRAND := 8849
 PRODUCT_MODEL := TANK 3
 PRODUCT_MANUFACTURER := OBLUE
