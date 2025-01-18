@@ -33,6 +33,7 @@ Some tests was made:
 ### First img Test
 
 * Initial DT: 2024-09-09 update to 2025-01-09
+  
    Compiled img file 2025mmdd and tested in 2025mmdd
 
 - MT6789 - A12
