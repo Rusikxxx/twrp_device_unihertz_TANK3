@@ -14,7 +14,7 @@ on:
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
-        default: 'twrp-pbrp'
+        default: 'pbrp-14'
 env:
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
 jobs:
@@ -62,7 +62,7 @@ jobs:
         echo "workspace-folder=$(pwd)" >> $GITHUB_OUTPUT
         git config --global user.name "lopestom"
         git config --global user.email "guillopes2002@gmail.com"
-        repo init --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-14.0
+        repo init --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1
       id: pwd
           
     - name: Repo Sync
