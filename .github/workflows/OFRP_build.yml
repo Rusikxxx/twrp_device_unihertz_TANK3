@@ -15,15 +15,15 @@ on:
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/lopestom/twrp_device_IIIF150_B2_Ultra'
+        default: 'https://github.com/lopestom/twrp_device_unihertz_TANK3/'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
-        default: 'fox_12.1_transsion'
+        default: 'fox_12.1'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/IIIF150/B2_Ultra'
+        default: 'device/8849/TANK3'
       COMMON_TREE_URL:
         description: 'COMMON_TREE_URL (if no common tree, leave blank)'
         required: false
@@ -33,11 +33,11 @@ on:
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'B2_Ultra'
+        default: 'TANK3'
       MAKEFILE_NAME:
         description: 'MAKEFILE_NAME'
         required: true
-        default: 'twrp_B2_Ultra'
+        default: 'twrp_TANK3'
       BUILD_TARGET:
         description: 'BUILD_TARGET'
         required: true
@@ -92,7 +92,7 @@ jobs:
     - name: Checkout device tree
       uses: actions/checkout@v4
       with:
-       path: ${{ steps.pwd.outputs.workspace-folder }}/fox_${{ github.event.inputs.MANIFEST_BRANCH }}/device/IIIF150/B2_Ultra
+       path: ${{ steps.pwd.outputs.workspace-folder }}/fox_${{ github.event.inputs.MANIFEST_BRANCH }}/device/8849/TANK3
 
 #    - name: Clone device tree
 #      run: |
