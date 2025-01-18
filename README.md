@@ -57,7 +57,11 @@ Some tests was made:
 
 #### Big thanks to:
 
-- [Котфуций 🐾](https://4pda.to/forum/index.php?showuser=2166242) aka @Rusikxxx
+- [Котфуций 🐾](https://4pda.to/forum/index.php?showuser=2166242) aka @Rusikxxx for testing all TWPR and find solutions
+- @ADeadTrousers
+  * For his role as a lead developer in the solutions to solve the decryption problem in TWRP using trustkernel.
+- @Oleg S. / @remittor
+  * For the exchange of ideas and solutions.
 - [TeamWin](https://github.com/TeamWin) for TWRP SC.
   * TWRP version 3.7.1_12
 
