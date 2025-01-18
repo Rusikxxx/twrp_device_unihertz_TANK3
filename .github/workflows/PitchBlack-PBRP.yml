@@ -160,7 +160,7 @@ jobs:
       with:
         files: |
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*boot*.img
-          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/PBRP*.zip
+          workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
           out/target/product/TANK3/vendor_boot.img
         name: Unofficial PBRP for ${{ github.event.inputs.DEVICE_NAME }} // ${{ env.BUILD_DATE }}
         tag_name: ${{ github.run_id }}
