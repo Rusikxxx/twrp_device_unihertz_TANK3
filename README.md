@@ -1,11 +1,14 @@
-### TWRP device tree for Unihertz Tank 3 -- 8849 TANK3 - kernel 5.10.198
+[![GitHub Release](https://img.shields.io/github/release/lopestom/twrp_device_unihertz_TANK3.svg?logo=github)](https://github.com/lopestom/twrp_device_unihertz_TANK3/releases/tag/12845013125) [![GPLv3+](https://img.shields.io/badge/license-GPLv3+-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html) [![download](https://img.shields.io/github/downloads/lopestom/twrp_device_unihertz_TANK3/total)](https://github.com/lopestom/twrp_device_unihertz_TANK3/releases/download/12845013125/vendor_boot.img)
+--------------------------------------------------------
+## PBRP device tree for Unihertz Tank 3 -- 8849 TANK3 - kernel 5.10.198-android12-9-g4b1368c969f7
 
 This branch has ***encrypt/decrypt*** files and option to more test with that. 
 
-[![GPLv3+](https://img.shields.io/badge/license-GPLv3+-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.patreon.com/pitchblackrecovery) to PBRP so any donation is highly appreciated!
+
 
 ### Firmware version:
-2024080522_g91v95c2k_dfl_tee.zip - TANK3_20240422 -- TANK3_20240805_2112 -- TANK3_20240805_2117
+2025010211_g91v95c2k_dfl_tee.zip - TANK3_20240422 -- TANK3_20250102_1022 -- TANK3_20250102_1026
 
 ## Device
 
@@ -21,45 +24,54 @@ Display | 6.79 inches, 60~120 hz
 Resolution | 1080 x 2460 pixels, 21:9 ratio (~396 ppi density)
 Processor | MediaTek Dimensity 8200 (MT6896)
 
-
 ![TANK 3](https://cdn-files.kimovil.com/default/0009/42/thumb_841135_default_big.jpg)
 
 ### Status
 
-The tester only install `vendor_boot-TANK3-2024mmdd.img` file to know if working.
+The tester only install `vendor_boot-TANK3-2025mmdd.img` file to know if working.
 <details><summary>History - Click to open</summary>
 <p>
 Some tests was made:
 
 ### First img Test
 
-* Initial DT: 2024-09-09
-   Compiled img file 2024mmdd and tested in 2024mmdd
+* Initial DT: 2024-09-09 update to 2025-01-09
+  
+   Compiled img file 2025mmdd and tested in 2025mmdd
 
 - MT6789 - A12
   - Status: booted??
-  - [?] booted
+  - [X] booted
 
-   - vendor_boot-TANK3-2024mmdd.img => Working?? Not working?
-  - [?] Working
-  - [?] CPU/temperature correct
-  - [ ] Vibrator module - not work
+   - vendor_boot-TANK3-2025mmdd.img => Working?? Not working?
+  - [X] Working
+  - [X] CPU/temperature correct
+  - [ ] Vibrator module - not work - not need
 
 </p>
 </details>
 
-<details><summary>TWRP Pictures - Click to open</summary>
+<details><summary>PBRP Pictures - Click to open</summary>
 <p>
 
-![Screenshot_2025-01-03-17-07-43_resized](https://github.com/user-attachments/assets/f797dce4-09b9-4fa4-bc61-471cf701a8e5) ![Screenshot_2025-01-03-17-09-23_resized](https://github.com/user-attachments/assets/03e3bf8c-1250-4ba0-af67-82cc199ae0f1)
+![1_resized](https://github.com/user-attachments/assets/728a85e8-e97a-4a4d-9a90-5749fae0ec08)
+![Screenshot_PBRP_2025-01-19-01-53-19_resized](https://github.com/user-attachments/assets/f2c25152-357e-421a-8e96-ddb0f38586c5)
+![Screenshot_PBRP_2025-01-19-10-58-51_resized](https://github.com/user-attachments/assets/081fa594-06bd-4c06-8d3f-0de2d9fc14b6)
+
 </p>
 </details>
 
 #### Big thanks to:
 
-- [Котфуций 🐾](https://4pda.to/forum/index.php?showuser=2166242) aka @Rusikxxx
+- [Котфуций 🐾](https://4pda.to/forum/index.php?showuser=2166242) aka @Rusikxxx for testing all TWPR and find solutions
+- @ADeadTrousers
+  * For his role as a lead developer in the solutions to solve the decryption problem in TWRP using trustkernel.
+- @Oleg S. / @remittor
+  * For the exchange of ideas and solutions.
 - [TeamWin](https://github.com/TeamWin) for TWRP SC.
-  * TWRP version 3.7.0_12
+  * TWRP version 3.7.1_12
+- [PitchBlackRecoveryProject](https://github.com/PitchBlackRecoveryProject) for PBRP SC.
+  * PBRP 4.0 based TWRP3.7.1_12
 
 -----
 
@@ -84,6 +96,6 @@ fastboot flash vendor_boot vendor_boot.img
 export ALLOW_MISSING_DEPENDENCIES=true
 export LC_ALL=C
 . build/envsetup.sh
-lunch twrp_TANK3-eng
+lunch pb_TANK3-eng
 mka vendorbootimage -j$(nproc --all)
 ```
