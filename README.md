@@ -1,11 +1,14 @@
-### TWRP device tree for Unihertz Tank 3 -- 8849 TANK3 - kernel 5.10.198
+[![GitHub Release](https://img.shields.io/github/release/lopestom/twrp_device_unihertz_TANK3.svg?logo=github)](https://github.com/lopestom/twrp_device_unihertz_TANK3/releases/tag/12841877141) [![GPLv3+](https://img.shields.io/badge/license-GPLv3+-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html) [![download](https://img.shields.io/github/downloads/lopestom/twrp_device_unihertz_TANK3/total)](https://github.com/lopestom/twrp_device_unihertz_TANK3/releases/download/12841877141/OrangeFox-Unofficial-TANK3.img)
+--------------------------------------------------------
+## OFRP device tree for Unihertz Tank 3 -- 8849 TANK3 - kernel 5.10.198-android12-9-g4b1368c969f7
 
 This branch has ***encrypt/decrypt*** files and option to more test with that. 
 
-[![GPLv3+](https://img.shields.io/badge/license-GPLv3+-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![Donate](https://img.shields.io/badge/Donate-opencollective-orange.svg)](https://opencollective.com/orangefox/donate?interval=oneTime&amount=20&name=&legalName=&email=) to OFRP so any donation is highly appreciated!
+
 
 ### Firmware version:
-2024080522_g91v95c2k_dfl_tee.zip - TANK3_20240422 -- TANK3_20240805_2112 -- TANK3_20240805_2117
+2025010211_g91v95c2k_dfl_tee.zip - TANK3_20240422 -- TANK3_20250102_1022 -- TANK3_20250102_1026
 
 ## Device
 
@@ -21,45 +24,52 @@ Display | 6.79 inches, 60~120 hz
 Resolution | 1080 x 2460 pixels, 21:9 ratio (~396 ppi density)
 Processor | MediaTek Dimensity 8200 (MT6896)
 
-
 ![TANK 3](https://cdn-files.kimovil.com/default/0009/42/thumb_841135_default_big.jpg)
 
 ### Status
 
-The tester only install `vendor_boot-TANK3-2024mmdd.img` file to know if working.
+The tester only install `vendor_boot-TANK3-2025mmdd.img` file to know if working.
 <details><summary>History - Click to open</summary>
 <p>
 Some tests was made:
 
 ### First img Test
 
-* Initial DT: 2024-09-09
-   Compiled img file 2024mmdd and tested in 2024mmdd
+* Initial DT: 2024-09-09 update to 2025-01-09
+  
+   Compiled img file 2025mmdd and tested in 2025mmdd
 
 - MT6789 - A12
   - Status: booted??
-  - [?] booted
+  - [X] booted
 
-   - vendor_boot-TANK3-2024mmdd.img => Working?? Not working?
-  - [?] Working
-  - [?] CPU/temperature correct
-  - [ ] Vibrator module - not work
+   - vendor_boot-TANK3-2025mmdd.img => Working?? Not working?
+  - [X] Working
+  - [X] CPU/temperature correct
+  - [ ] Vibrator module - not work - not need
 
 </p>
 </details>
 
-<details><summary>TWRP Pictures - Click to open</summary>
+<details><summary>OFRP Pictures - Click to open</summary>
 <p>
 
-![Screenshot_2025-01-03-17-07-43_resized](https://github.com/user-attachments/assets/f797dce4-09b9-4fa4-bc61-471cf701a8e5) ![Screenshot_2025-01-03-17-09-23_resized](https://github.com/user-attachments/assets/03e3bf8c-1250-4ba0-af67-82cc199ae0f1)
+![Screenshot_2025-01-19-10-38-59_resized](https://github.com/user-attachments/assets/4f1601d9-8333-4ac5-a33d-b840d0db2e77)
+![Screenshot_2025-01-19-08-34-28_resized](https://github.com/user-attachments/assets/4c7c7324-4ce7-4366-a34b-f9e2670b98a1)
 </p>
 </details>
 
 #### Big thanks to:
 
-- [Котфуций 🐾](https://4pda.to/forum/index.php?showuser=2166242) aka @Rusikxxx
+- [Котфуций 🐾](https://4pda.to/forum/index.php?showuser=2166242) aka @Rusikxxx for testing all TWPR and find solutions
+- @ADeadTrousers
+  * For his role as a lead developer in the solutions to solve the decryption problem in TWRP using trustkernel.
+- @Oleg S. / @remittor
+  * For the exchange of ideas and solutions.
 - [TeamWin](https://github.com/TeamWin) for TWRP SC.
-  * TWRP version 3.7.0_12
+  * TWRP version 3.7.1_12
+- [OrangeFoxRecovery](https://github.com/OrangeFoxRecovery) for OFRP SC.
+  * OFRP 12.1 based TWRP3.7.1_12
 
 -----
 
