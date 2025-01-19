@@ -1,6 +1,6 @@
 [![GitHub Release](https://img.shields.io/github/release/lopestom/twrp_device_unihertz_TANK3.svg?logo=github)](https://github.com/lopestom/twrp_device_unihertz_TANK3/releases/tag/12833551276) [![GPLv3+](https://img.shields.io/badge/license-GPLv3+-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html) [![download](https://img.shields.io/github/downloads/lopestom/twrp_device_unihertz_TANK3/total)](https://github.com/lopestom/twrp_device_unihertz_TANK3/releases/download/12833551276/vendor_boot-TANK3-20250117.img)
 --------------------------------------------------------
-### TWRP device tree for Unihertz Tank 3 -- 8849 TANK3 - kernel 5.10.198-android12-9-g4b1368c969f7
+## TWRP device tree for Unihertz Tank 3 -- 8849 TANK3 - kernel 5.10.198-android12-9-g4b1368c969f7
 
 This branch has ***encrypt/decrypt*** files and option to more test with that. 
 
