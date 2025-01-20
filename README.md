@@ -4,7 +4,7 @@
 
 This branch has ***encrypt/decrypt*** files and option to more test with that. 
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.patreon.com/pitchblackrecovery) to PBRP so any donation is highly appreciated!
+[![Donate](https://img.shields.io/badge/Donate-Patreon-brown.svg)](https://www.patreon.com/pitchblackrecovery) to PBRP so any donation is highly appreciated!
 
 
 ### Firmware version:
