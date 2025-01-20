@@ -6,7 +6,7 @@ This branch has ***encrypt/decrypt*** files and option to more test with that.
 
 For more knowledge read [android_vendor_mediatek_trustkernel](https://github.com/R0rt1z2/android_vendor_mediatek_trustzone/blob/81be8a10ac9a2a800857eb674d842358dd555736/trustkernel/source/bsp/platform/common/patches/sepolicy_bsp_nonplat.patch#L10)
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/donate?token=Cxr1xP4Yr_XgV2E5lpC6Oo4qvbqmPiS3TgR6aiMEnQUgxr_nP242Z6zMqzeluThwaikNL-FXe8RnA1pT) to TeamWin so any donation is highly appreciated!
+[![Donate](https://twrp.me/) to TeamWin so any donation is highly appreciated!
 
 
 ### Firmware version:
