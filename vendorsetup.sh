@@ -35,7 +35,7 @@ export FOX_DELETE_INITD_ADDON=1
 export FOX_REMOVE_BASH=1
 export FOX_REMOVE_AAPT=1
 export FOX_VARIANT="A14"
-export FOX_VERSION=$(date +%y.%m.%d)
+export FOX_MAINTAINER_PATCH_VERSION=$(date +%y.%m.%d)
 
 # OrangeFox flags
 export OF_USE_MAGISKBOOT := 1
