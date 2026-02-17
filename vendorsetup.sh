@@ -36,42 +36,41 @@ export FOX_REMOVE_BASH=1
 export FOX_REMOVE_AAPT=1
 export FOX_VARIANT="A14"
 #export FOX_MAINTAINER_PATCH_VERSION=$(date +%y.%m.%d)
-
-# OrangeFox flags
-export OF_USE_MAGISKBOOT := 1
-export OF_PATCH_AVB20 := 1
-export OF_SUPPORT_VBMETA_AVB2_PATCHING := 1
-export OF_FIX_DECRYPTION_ON_DATA_MEDIA :=1
-export OF_FORCE_PREBUILT_KERNEL := 1
-export OF_DEFAULT_TIMEZONE := IST-5:30
-export OF_MAINTAINER := Ayus Chatterjee
-export OF_CLOCK_POS := 1
-export OF_HIDE_NOTCH := 1
-export OF_FLASHLIGHT_ENABLE := 1
-export OF_SCREEN_H := 2400 # (aspect ratio height) × 120, 20 × 120
-#export OF_STATUS_H := 80
-#export OF_STATUS_INDENT_LEFT := 60
-#export OF_STATUS_INDENT_RIGHT := 60
-#export OF_ALLOW_DISABLE_NAVBAR := 0
-export OF_QUICK_BACKUP_LIST := "/boot;/data;"
-export OF_NO_TREBLE_COMPATIBILITY_CHECK := 1
-#export OF_DYNAMIC_FULL_SIZE := 9126805504
-export OF_NO_REFLASH_CURRENT_ORANGEFOX := 1
-export OF_USE_GREEN_LED := 0
-export OF_FORCE_CASEFOLDING := 1
-export OF_OPTIONS_LIST_NUM := 9
-export OF_UNBIND_SDCARD_F2FS := 1
-export OF_FORCE_DATA_FORMAT_F2FS := 1
-export OF_USE_DMCTL := 1
-export OF_WIPE_METADATA_AFTER_DATAFORMAT := 1
-export OF_BIND_MOUNT_SDCARD_ON_FORMAT := 1
-export OF_LOOP_DEVICE_ERRORS_TO_LOG := 1
-export OF_DEFAULT_KEYMASTER_VERSION := 4.1
-export OF_FL_PATH1 := /sys/class/flashlight_core/flashlight/flashlight_torch/flashlight_torch
-export OF_FL_PATH2 := /sys/class/flashlight_core/flashlight/flashlight_torch/subsystem/flashlight
-
 export FOX_DRASTIC_SIZE_REDUCTION=1
 export FOX_EXTREME_SIZE_REDUCTION=1
+
+# OrangeFox flags
+OF_USE_MAGISKBOOT := 1
+OF_PATCH_AVB20 := 1
+OF_SUPPORT_VBMETA_AVB2_PATCHING := 1
+OF_FIX_DECRYPTION_ON_DATA_MEDIA :=1
+OF_FORCE_PREBUILT_KERNEL := 1
+OF_DEFAULT_TIMEZONE := IST-5:30
+OF_MAINTAINER := Ayus Chatterjee
+OF_CLOCK_POS := 1
+OF_HIDE_NOTCH := 1
+OF_FLASHLIGHT_ENABLE := 1
+OF_SCREEN_H := 2400 # (aspect ratio height) × 120, 20 × 120
+#OF_STATUS_H := 80
+#OF_STATUS_INDENT_LEFT := 60
+#OF_STATUS_INDENT_RIGHT := 60
+#OF_ALLOW_DISABLE_NAVBAR := 0
+OF_QUICK_BACKUP_LIST := "/boot;/data;"
+OF_NO_TREBLE_COMPATIBILITY_CHECK := 1
+#OF_DYNAMIC_FULL_SIZE := 9126805504
+OF_NO_REFLASH_CURRENT_ORANGEFOX := 1
+OF_USE_GREEN_LED := 0
+OF_FORCE_CASEFOLDING := 1
+OF_OPTIONS_LIST_NUM := 9
+OF_UNBIND_SDCARD_F2FS := 1
+OF_FORCE_DATA_FORMAT_F2FS := 1
+OF_USE_DMCTL := 1
+OF_WIPE_METADATA_AFTER_DATAFORMAT := 1
+OF_BIND_MOUNT_SDCARD_ON_FORMAT := 1
+OF_LOOP_DEVICE_ERRORS_TO_LOG := 1
+OF_DEFAULT_KEYMASTER_VERSION := 4.1
+OF_FL_PATH1 := /sys/class/flashlight_core/flashlight/flashlight_torch/flashlight_torch
+OF_FL_PATH2 := /sys/class/flashlight_core/flashlight/flashlight_torch/subsystem/flashlight
 
 # ~ cache
 export USE_CCACHE=1
