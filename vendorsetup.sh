@@ -16,6 +16,11 @@ if [ -z "$1" -a -z "$FOX_BUILD_DEVICE" ]; then
    fox_get_target_device
 fi
 
+# Build
+export LC_ALL="C"
+export ALLOW_MISSING_DEPENDENCIES=true
+export FOX_BUILD_DEVICE="LXX503"
+
 export DEVICE="LXX503"
 export OEM="LAVA"
 
@@ -30,6 +35,7 @@ export FOX_DELETE_INITD_ADDON=1
 export FOX_REMOVE_BASH=1
 export FOX_REMOVE_AAPT=1
 export FOX_VARIANT="A14"
+export FOX_VERSION=$(date +%y.%m.%d)
 
 # OrangeFox flags
 export OF_USE_MAGISKBOOT := 1
@@ -64,6 +70,10 @@ export OF_DEFAULT_KEYMASTER_VERSION := 4.1
 export OF_FL_PATH1 := /sys/class/flashlight_core/flashlight/flashlight_torch/flashlight_torch
 export OF_FL_PATH2 := /sys/class/flashlight_core/flashlight/flashlight_torch/subsystem/flashlight
 
+export FOX_DRASTIC_SIZE_REDUCTION=1
+export FOX_EXTREME_SIZE_REDUCTION=1
+
+# ~ cache
 export USE_CCACHE=1
 export CCACHE_EXEC=/usr/bin/ccache
 export CCACHE_MAXSIZE="5G"
@@ -75,4 +85,5 @@ then
   echo "Please edit the CCACHE_DIR build variable or mount the directory."
 fi
 
-export LC_ALL="C"
+# Clone to fix build on minimal manifest
+git clone https://android.googlesource.com/platform/external/gflags/ -b android-12.1.0_r4 external/gflags
