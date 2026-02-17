@@ -1,27 +1,33 @@
-####### generate by lopestom #######
-# Dynamic Partitions
-ro.boot.dynamic_partitions=true
-# Fstab
-ro.postinstall.fstab.prefix=/system
-# USB MTP
-ro.sys.usb.storage.type=mtp
-# Crypto
+# charger
+ro.charger.disable_init_blank=true
+
+# crypto
 ro.crypto.volume.filenames_mode=aes-256-cts
-# TEE
-ro.vendor.mtk_trustkernel_tee_support=1
-ro.hardware.kmsetkey=trustkernel
-ro.tee_support=1
-ro.vendor.trustkernel.attest_ids=1
+ro.crypto.uses_fs_ioc_add_encryption_key=true
+ro.crypto.metadata.enabled=true
+ro.crypto.support_metadata_encrypt=true
+ro.crypto.volume.metadata.method=dm-default-key
+ro.crypto.dm_default_key.options_format.version=2
+ro.crypto.volume.options=::v2
+
+# MTK
+ro.mediatek.platform=MT6833
+ro.vendor.mtk_trustonic_tee_support=1
+ro.vendor.mtk_tee_gp_support=1
+ro.vendor.mtk_microtrust_tee_support=1
+
+# USB
+ro.sys.usb.bicr=no
+ro.sys.usb.charging.only=yes
+ro.sys.usb.mtp.whql.enable=0
+ro.sys.usb.storage.type=mtp
+persist.sys.usb.config=mtp,adb
+
 # Gatekeeper
-ro.hardware.gatekeeper=trustkernel
-# Misc
-ro.vendor.mediatek.platform=MT6895
-ro.agui.platform_name=mt6895
-ro.agui.version_release=12
-ro.agui_tee=TRUSTKERNEL
-ro.vendor.mtk_f2fs_enable=1
-ro.vendor.mtk_emmc_support=1
-ro.hardware.egl=meow
+ro.hardware.gatekeeper=beanpod
+
+# Kmsetkey
+ro.hardware.kmsetkey=beanpod
+
 # Keymaster
 keymaster_ver=4.1
-####### generate by lopestom #######
