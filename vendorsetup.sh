@@ -28,8 +28,6 @@ export FOX_DELETE_INITD_ADDON=1
 export FOX_REMOVE_BASH=1
 export FOX_REMOVE_AAPT=1
 export FOX_VARIANT="A12+"
-export FOX_DRASTIC_SIZE_REDUCTION=1
-export FOX_EXTREME_SIZE_REDUCTION=1
 
 # OrangeFox flags
 export OF_USE_MAGISKBOOT="1"
@@ -41,27 +39,40 @@ export OF_DEFAULT_TIMEZONE="CST-3:00"
 export OF_MAINTAINER="lopestom"
 export OF_CLOCK_POS=1
 export OF_HIDE_NOTCH=1
-export OF_FLASHLIGHT_ENABLE=1
 export OF_SCREEN_H=2400 # (aspect ratio height) × 120, 20 × 120
 # Backup
-export OF_QUICK_BACKUP_LIST="/boot;/data;"
+export OF_QUICK_BACKUP_LIST="/boot;/data;/nvram;/protect_f;/protect_s;/persist;"
 export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
 export OF_NO_REFLASH_CURRENT_ORANGEFOX=1
-export OF_USE_GREEN_LED=0
+# UI & Hardware Features
+export OF_FLASHLIGHT_ENABLE=0
 export OF_FORCE_CASEFOLDING=1
 export OF_OPTIONS_LIST_NUM=9
 export OF_UNBIND_SDCARD_F2FS=1
 export OF_FORCE_DATA_FORMAT_F2FS=1
-export OF_USE_DMCTL=1
+export OF_USE_DMCTL=0
 export OF_WIPE_METADATA_AFTER_DATAFORMAT=1
 export OF_BIND_MOUNT_SDCARD_ON_FORMAT=1
 export OF_LOOP_DEVICE_ERRORS_TO_LOG=1
 export OF_DEFAULT_KEYMASTER_VERSION=4.1
+# Language
+export TW_DEFAULT_LANGUAGE="en"
+# run a process after formatting data to work-around MTP issues
+#export FOX_BUGGED_AOSP_ARB_WORKAROUND="1546300800"
+export FOX_RECOVERY_BOOT_PARTITION="/dev/block/platform/bootdevice/by-name/boot"
+export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
+export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
 
 # Build
 export LC_ALL="C"
 export ALLOW_MISSING_DEPENDENCIES=true
 export FOX_BUILD_DEVICE="Power_Armor14_Pro"
+
+# [NEW] [!! EXPERIMENTAL !!] - this must come after all other exports
+# trigger some *drastic* steps to reduce the size of the recovery ramdisk
+export FOX_DRASTIC_SIZE_REDUCTION=1
+# trigger some *extreme* steps to reduce the size of the recovery ramdisk
+export FOX_EXTREME_SIZE_REDUCTION=1
 
 # ~ cache
 export USE_CCACHE=1
