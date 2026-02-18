@@ -62,6 +62,7 @@ export TW_DEFAULT_LANGUAGE="en"
 export FOX_RECOVERY_BOOT_PARTITION="/dev/block/platform/bootdevice/by-name/boot"
 export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
+export FOX_RECOVERY_INSTALL_PARTITION="/dev/block/platform/bootdevice/by-name/boot"
 
 # Build
 export LC_ALL="C"
