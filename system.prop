@@ -1,33 +1,16 @@
-# charger
-ro.charger.disable_init_blank=true
-
-# crypto
-ro.crypto.volume.filenames_mode=aes-256-cts
-ro.crypto.uses_fs_ioc_add_encryption_key=true
-ro.crypto.metadata.enabled=true
-ro.crypto.support_metadata_encrypt=true
-ro.crypto.volume.metadata.method=dm-default-key
-ro.crypto.dm_default_key.options_format.version=2
-ro.crypto.volume.options=::v2
-
-# MTK
-ro.mediatek.platform=MT6833
-ro.vendor.mtk_trustonic_tee_support=1
-ro.vendor.mtk_tee_gp_support=1
-ro.vendor.mtk_microtrust_tee_support=1
-
-# USB
-ro.sys.usb.bicr=no
-ro.sys.usb.charging.only=yes
+####### generate by lopestom #######
+ro.secure=0
+ro.adb.secure=0
+ro.debuggable=1
+persist.sys.usb.config=mtp,adb
+persist.service.adb.enable=1
+persist.service.debuggable=1
+persist.sys.isUsbOtgEnabled=true
 ro.sys.usb.mtp.whql.enable=0
 ro.sys.usb.storage.type=mtp
-persist.sys.usb.config=mtp,adb
-
-# Gatekeeper
-ro.hardware.gatekeeper=beanpod
-
-# Kmsetkey
-ro.hardware.kmsetkey=beanpod
-
-# Keymaster
-keymaster_ver=4.1
+ro.treble.enabled=true
+sys.usb.controller=musb-hdrc
+sys.usb.ffs.aio_compat=true
+fbe.metadata.wrappedkey=true
+vendor.gatekeeper.disable_spu=true
+####### generate by lopestom #######

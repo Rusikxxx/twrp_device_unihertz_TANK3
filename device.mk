@@ -1,60 +1,130 @@
-DEVICE_PATH := device/lava/LXX503
+#
+# Copyright (C) 2022 The TWRP Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
-# Soong namespace
-PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
+LOCAL_PATH := device/ulefone/Power_Armor14_Pro
 
-# Virtual A/B - Keep these for partition mounting logic
+# Virtual A/B OTA
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
-AB_OTA_UPDATER := true
-ENABLE_VIRTUAL_AB := true
+# Enable project quotas and casefolding for emulated storage without sdcardfs
+$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
 
-# Define A/B partitions so recovery knows what to slot-switch
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.crypto.dm_default_key.options_format.version=2 \
+    ro.crypto.volume.filenames_mode=aes-256-cts \
+    ro.crypto.volume.metadata.method=dm-default-key \
+    ro.crypto.volume.options=::v2
+
+# Dynamic Partitions
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
+
+# API
+PRODUCT_SHIPPING_API_LEVEL := 30
+
+PRODUCT_PLATFORM := mt6768
+
+# VNDK
+PRODUCT_TARGET_VNDK_VERSION := 30
+
+# Treble
+BOARD_VNDK_VERSION := current
+
+# A/B
+AB_OTA_UPDATER := true
+
 AB_OTA_PARTITIONS += \
     boot \
-    vendor_boot \
+    dtbo \
+    lk \
+    preloader \
+    product \
+    system \
+    odm \
     vbmeta \
     vbmeta_system \
     vbmeta_vendor \
-    system \
-    system_ext \
-    product \
-    vendor 
+    vendor \
+    vendor_boot
 
-# Configure emulated_storage.mk (Required for /sdcard)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
+AB_OTA_POSTINSTALL_CONFIG += \
+    RUN_POSTINSTALL_system=true \
+    POSTINSTALL_PATH_system=system/bin/mtk_plpath_utils \
+    FILESYSTEM_TYPE_system=ext4 \
+    POSTINSTALL_OPTIONAL_system=true
 
-# Enable Fuse Passthrough for performance
-PRODUCT_PROPERTY_OVERRIDES += persist.sys.fuse.passthrough.enable=true
+# VIRTUAL A/B
+ENABLE_VIRTUAL_AB := true
 
-# Minimal Boot Control HAL (Essential for A/B switching)
+# Boot control HAL
 PRODUCT_PACKAGES += \
+    android.hardware.boot@1.2-service \
+    android.hardware.boot@1.2-mtkimpl \
     android.hardware.boot@1.2-mtkimpl.recovery \
-    bootctrl.mt6833 \
-    libgptutils \
+    android.hardware.boot@1.0-impl-1.2-mtkimpl
+
+PRODUCT_PACKAGES_DEBUG += \
+    update_engine_client \
+    bootctrl
+
+PRODUCT_PACKAGES += \
+    bootctrl.$(TARGET_BOARD_PLATFORM) \
+    bootctrl.$(TARGET_BOARD_PLATFORM).recovery
+
+PRODUCT_PACKAGES += \
+    otapreopt_script \
     checkpoint_gc \
-    create_pl_dev.recovery
+    update_engine \
+    update_verifier \
+    update_engine_sideload
 
-# Essential Crypto/FBE support 
+# MTK PlPath Utils
 PRODUCT_PACKAGES += \
-    libkeymaster4 \
-    libkeymaster41 \
-    libkeymaster4support \
-    libkeymaster_messages \
-    android.hardware.keymaster@4.0 \
-    android.hardware.keymaster@4.1 \
-    vendor.mediatek.hardware.keymaster_attestation@1.0 \
-    vendor.mediatek.hardware.keymaster_attestation@1.1 \
-    android.hardware.gatekeeper@1.0-impl \
-    gatekeeper.default \
-    kmsetkey.beanpod \
-    libSoftGatekeeper
+    mtk_plpath_utils \
+    mtk_plpath_utils.recovery
 
-# Keystore2
+# Fastbootd stuff
 PRODUCT_PACKAGES += \
-    android.system.keystore2 \
+    android.hardware.fastboot@1.0-impl-mock \
+    android.hardware.fastboot@1.0-impl-mock.recovery \
+    android.hardware.fastboot@1.0-impl-mtk \
+    fastbootd
 
-# Otacert
-PRODUCT_EXTRA_RECOVERY_KEYS += \
-    $(DEVICE_PATH)/security/LXX503_releasekey
+# health Hal
+PRODUCT_PACKAGES += \
+    android.hardware.health@2.1-impl \
+    android.hardware.health@2.1-service \
+    libhealthd.$(TARGET_BOARD_PLATFORM)
+
+
+# Gatekeeper
+PRODUCT_PACKAGES += \
+    android.hardware.gatekeeper@1.0-service \
+    android.hardware.gatekeeper@1.0.vendor \
+    android.hardware.gatekeeper@1.0-impl
+
+# Keymaster
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@4.1
+
+# Additional target Libraries
+TARGET_RECOVERY_DEVICE_MODULES += \
+    android.hardware.keymaster@4.1
+    
+TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
+    $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.keymaster@4.1.so
+
+TW_OVERRIDE_SYSTEM_PROPS := \
+    "ro.build.product;ro.build.fingerprint;ro.build.version.incremental;ro.product.device=ro.product.system.device;ro.product.model=ro.product.system.model;ro.product.name=ro.product.system.name"

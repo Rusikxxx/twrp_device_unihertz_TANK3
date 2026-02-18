@@ -1,0 +1,25 @@
+####### generate by lopestom #######
+#ro.product.first_api_level=31
+#ro.board.first_api_level=30
+ro.apex.updatable=true
+init.userspace_reboot.is_supported=true
+persist.adb.nonblocking_ffs=1
+ro.odm.build_number=Power Armor 14 Pro_TH1_EEA_V03
+ro.odm.pri_aging_emmc=1
+ro.odm.otg=1
+ro.odm.tee=2
+ro.odm.fingerprint=fortsense_tee_none_android11
+ro.frp.pst=/dev/block/by-name/frp
+ro.hardware.egl=meow
+ro.sf.lcd_density=320
+####################################
+ro.vendor.mediatek.platform=MT6768
+ro.hardware=mt6768
+ro.crypto.volume.filenames_mode=aes-256-cts
+ro.hardware.kmsetkey=beanpod
+ro.hardware.gatekeeper=beanpod
+ro.vendor.mtk_microtrust_tee_support=1
+ro.vendor.mtk_f2fs_enable=1
+ro.vendor.mtk_emmc_support=1
+Build.BRAND=MTK
+####### generate by lopestom #######

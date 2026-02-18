@@ -1,44 +1,85 @@
-# # OrangeFox Device Tree for LAVA BLAZE 5G (LXX503)
+[![GitHub Release](https://img.shields.io/github/release/lopestom/twrp_device_ulefone_PA14Pro.svg?logo=github)](https://github.com/lopestom/twrp_device_ulefone_PA14Pro/releases) [![GPLv3+](https://img.shields.io/badge/license-GPLv3+-red.svg)](https://www.gnu.org/licenses/gpl-3.0.html) [![download](https://img.shields.io/github/downloads/lopestom/twrp_device_ulefone_PA14Pro/total)](https://github.com/lopestom/twrp_device_ulefone_PA14Pro/releases/download/Encrypt_Decrypt/boot-UPA14Pro-A12-20231229-WORK_ENC-Awesome.img)
+--------------------------------------------------------
+# Device Tree for Ulefone Power Armor 14 Pro - mt6768
 
-<img src="https://wiki.orangefox.tech/banner.svg" width="500">
+**Repository Views** ![Views](https://profile-counter.glitch.me/twrp_device_ulefone_PA14Pro/count.svg)
+--------------------------------------------------------
+- Firmware version: GQ3097TH1_KSE3H_Ulefone_20220720_V01
 
-[![Orangefox Recovery Build](https://github.com/ayusc/orangefox_device_lava_LXX503/actions/workflows/ofox.yml/badge.svg?event=workflow_dispatch)](https://github.com/ayusc/orangefox_device_lava_LXX503/actions/workflows/ofox.yml)
+## Status
+This branch android-12.1 has ***encrypt/decrypt*** files and option to more test with that.
 
-> [!WARNING]
-> **Read Carefully !!!**<br>
->
-> This is not a recovery image (instead a boot image) and it must be flashed into the /boot partition (since it's a A/B partition device with no recovery partition). 
+You need read the [realease](https://github.com/lopestom/twrp_device_ulefone_PA14Pro/releases/tag/Encrypt_Decrypt) tab to know about these DT.
 
-### How to Install 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/donate?token=Cxr1xP4Yr_XgV2E5lpC6Oo4qvbqmPiS3TgR6aiMEnQUgxr_nP242Z6zMqzeluThwaikNL-FXe8RnA1pT) to TeamWin so any donation is highly appreciated!
 
-Steps:
+------------------------------------
+## Device specifications
+<details><summary>Specs - Click to open</summary>
+<p>
 
-> [!NOTE]
-> You must have a backup of the stock boot.img before proceeding !
+Basic   | Specification Sheet
+-------:|:-------------------------
+Release Date | 2022, March 09
+Shipped Android Version | 12
+Chipset | Mediatek Helio G85
+CPU     | Octa-core (2x2.0 GHz Cortex-A75 & 6x1.8 GHz Cortex-A55)
+GPU     | Mali-G52 MC2
+Memory  | 6GB RAM
+Storage | 128 GB
+MicroSD | Up to 512 GB
+Battery | Li-Po 10000 mAh, non-removable
+Fast charging | 18W
+Fast wireless charging | 15W
+Display | 720 x 1600 pixels, 6.52"
+Rear Camera  | 20MPx (wide) & 2MPx (macro) & 2MPx (depth)
+Selfie Front Camera | 20MPx LED flash, HDR
+Features| Fingerprint (side-mountedn sensor), accelerometer, proximity, compass
+</p>
+</details>
 
-1. First of all the bootloader needs to be unlocked (since you are here I assume you already have done it)
-2. Hold Vol UP + Power Key it open open a menu with 3 options (select Fastboot)
-3. Once in fastboot enter the command `fastboot flash boot twrp.img` or `fastboot flash boot ofox.img` (Depending on whether you want TWRP or Orangefox)
-<br>**(On this device booting the image directly isn't supported so we have to directly flash it, if anything goes wrong flash back the stock boot.img and report an issue)**
-4. Enter `fastboot reboot recovery` to enter into the newly flashed recovery.
-5. After your work is done, reboot to system.
-6. Enjoy :)
+--------------------------------------------------------
+## TWRP device tree MTK6768_12.0 - k69v1_64
+![Ulefone Power Armor 14 Pro](https://fdn2.gsmarena.com/vv/pics/ulefone/ulefone-power-armor-14-pro-1.jpg)
 
-That's it! Orangefox should now be successfully installed on your device. It successfully replaced the stock recovery on the device.
-Now to access the recovery anytime press Vol UP + Power Key together and toggle the recovery option.
+---------------
+- Status: Done - boot-UPA14Pro-A12-20231229-0142.img
 
-![LXX503](https://fdn2.gsmarena.com/vv/pics/lava/lava-blaze-5g-01.jpg)
+## What's the history?
+boot-UPA14_Pro_20220720_V01-A12-nnnnnnn.img => Working?? Not Working???
+- 22/08/2022 TWRP boot-UPA14_Pro_20220720_V01-A12-nnnnnnn.img --> booted;
+The TWRP compiled with A11 SC bootloping. The TWRP compiled with A12 need 38MB minimum file size and boot_ partition has only 32MB. So that's the problem now.
+Unpacked boot_TWRP.img and removed some files => 31.8MB sucesslly; TWRP boot and work and the problem is: device not start/boot normally => bootloop to TWRP.
 
-|Basic               |Spec Sheet|
-|--                  |--                    |
-|Display             |6.52" (720x1600 pixels) |
-  || IPS LCD, 90Hz||
-|Dimensions          |165.3 x 76.4 x 8.9 mm (6.51 x 3.01 x 0.35 in)                |
-|CPU                 |Octa-core (2x2.2 GHz Cortex-A76 & 6x2.0 GHz Cortex-A55)      |
-|Chipset             |Mediatek Dimensity 700 (7 nm) (mt6833)|
-|GPU                 |Mali-G57 MC2                                           |
-|Memory              |4 / 6 GB RAM                                                     |
-|Android Version     |14 (UpsideDownCake)                                    |
-|Storage             |128GB |
-|Codename             |LXX503 |
-|Kernel               |4.19.191 #1 SMP PREEMPT|
+<details><summary>TWRP Pictures ©2023 - Click to open</summary>
+<p>
+
+![Initial Menu](https://github.com/lopestom/twrp_device_ulefone_PA14Pro/)
+![Decrypt 1](https://github.com/lopestom/twrp_device_ulefone_PA14Pro/)
+![Restore](https://github.com/lopestom/twrp_device_ulefone_PA14Pro/)
+</p>
+</details>
+
+---------------
+
+## Credits
+
+- [lopestorm](https://github.com/lopestom) - For testing of TWRP.<br/>
+
+## Big thanks to:
+
+- [TeamWin](https://github.com/TeamWin) for TWRP SC.
+* TWRP version 3.7.2_12 *
+
+                  ####### generated by lopestom #######
+---------------
+## To build with minimal twrp AOSP
+```
+export ALLOW_MISSING_DEPENDENCIES=true
+export LC_ALL=C
+export USE_NINJA=false
+. build/envsetup.sh
+lunch twrp_Power_Armor14_Pro-eng
+mka bootimage
+```
+
